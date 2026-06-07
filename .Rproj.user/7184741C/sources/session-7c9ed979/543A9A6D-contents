@@ -1,0 +1,224 @@
+# ============================================================
+# 03 - SELECCIÓN DE VARIABLES
+# Tesis SAE - Pobreza Monetaria Municipal (Cauca y Valle)
+# ============================================================
+# Entrada: matriz_sae_transformada_v2.rds
+# Métodos: LASSO (cv) + Forward stepwise (AIC) + Best subset (BIC)
+# Semilla del proyecto: 2906
+# ============================================================
+
+library(dplyr)
+library(glmnet)
+library(leaps)
+library(ggplot2)
+library(here) # Para manejo dinámico de rutas en repositorios
+
+# ============================================================
+# CONFIGURACIÓN DE RUTAS (Adaptado para GitHub)
+# ============================================================
+ruta_out <- here("output")
+
+matriz_sae <- readRDS(file.path(ruta_out, "matriz_sae_transformada_v2.rds"))
+
+# Paleta del proyecto (para los gráficos)
+COL_PUNTO <- "#b5482e"; COL_BANDA <- "#c9c2b3"
+COL_MIN   <- "#2c6e6b"; COL_1SE   <- "#1a1814"
+
+# ============================================================
+# 1. SEPARAR VARIABLE OBJETIVO Y COVARIABLES
+# ============================================================
+# Excluir identificadores y TODO lo derivado de la variable objetivo
+# (varianza_pobreza, error_estandar, cvlog NO son covariables auxiliares)
+vars_no_predictoras <- c("cod_mun", "Municipio", "pobreza_monetaria",
+                         "varianza_pobreza", "error_estandar", "cvlog")
+
+y <- matriz_sae$pobreza_monetaria
+X <- matriz_sae %>% dplyr::select(-all_of(vars_no_predictoras))
+
+# Verificaciones de seguridad
+cat("¿cvlog en X?:", "cvlog" %in% names(X),
+    "| ¿error_estandar?:", "error_estandar" %in% names(X),
+    "| ¿varianza_pobreza?:", "varianza_pobreza" %in% names(X), "\n")
+cat("Columnas no numéricas:", sum(sapply(X, function(c) !is.numeric(c))), "\n")
+cat("Dimensiones de X:", dim(X), "\n\n")
+
+# ============================================================
+# 2. LASSO CON VALIDACIÓN CRUZADA
+# ============================================================
+X_mat <- as.matrix(X)
+
+set.seed(2906)
+cv_lasso <- cv.glmnet(x = X_mat, y = y, alpha = 1,
+                      nfolds = 10, standardize = TRUE)
+
+cat("Lambda mínimo:", cv_lasso$lambda.min, "\n")
+cat("Lambda 1se:    ", cv_lasso$lambda.1se, "\n\n")
+
+# Variables seleccionadas con cada criterio
+coef_1se <- coef(cv_lasso, s = "lambda.1se")
+seleccionadas_1se <- rownames(coef_1se)[which(coef_1se != 0)]
+seleccionadas_1se <- seleccionadas_1se[seleccionadas_1se != "(Intercept)"]
+
+coef_min <- coef(cv_lasso, s = "lambda.min")
+seleccionadas_min <- rownames(coef_min)[which(coef_min != 0)]
+seleccionadas_min <- seleccionadas_min[seleccionadas_min != "(Intercept)"]
+
+cat("LASSO lambda.1se:", length(seleccionadas_1se), "variables\n")
+print(seleccionadas_1se)
+cat("\nLASSO lambda.min:", length(seleccionadas_min), "variables\n")
+print(seleccionadas_min)
+
+# ---- Gráfico de validación cruzada ----
+df_cv <- data.frame(log_lambda = log(cv_lasso$lambda),
+                    mse = cv_lasso$cvm, mse_low = cv_lasso$cvlo,
+                    mse_up = cv_lasso$cvup)
+log_min <- log(cv_lasso$lambda.min); log_1se <- log(cv_lasso$lambda.1se)
+n_min <- cv_lasso$nzero[which(cv_lasso$lambda == cv_lasso$lambda.min)]
+n_1se <- cv_lasso$nzero[which(cv_lasso$lambda == cv_lasso$lambda.1se)]
+ymin_plot <- min(df_cv$mse_low)
+
+g_cv <- ggplot(df_cv, aes(x = log_lambda, y = mse)) +
+  geom_errorbar(aes(ymin = mse_low, ymax = mse_up), color = COL_BANDA,
+                width = 0.04, alpha = 0.7) +
+  geom_point(color = COL_PUNTO, size = 1.6) +
+  geom_vline(xintercept = log_min, linetype = "dashed", color = COL_MIN, linewidth = 0.6) +
+  geom_vline(xintercept = log_1se, linetype = "dashed", color = COL_1SE, linewidth = 0.6) +
+  annotate("text", x = log_min, y = ymin_plot,
+           label = paste0("lambda.min\n(", n_min, " vars)"),
+           hjust = 1.1, vjust = 0, size = 3.2, color = COL_MIN, lineheight = 0.9) +
+  annotate("text", x = log_1se, y = ymin_plot,
+           label = paste0("lambda.1se\n(", n_1se, " vars)"),
+           hjust = -0.1, vjust = 0, size = 3.2, color = COL_1SE, lineheight = 0.9) +
+  labs(x = expression(log(lambda)),
+       y = "Error cuadrático medio (validación cruzada)",
+       title = "Selección del parámetro de penalización del LASSO") +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold", size = 13),
+        panel.grid.minor = element_blank())
+
+ggsave(file.path(ruta_out, "fig_lasso_cv.png"), g_cv, width = 8, height = 5, dpi = 300)
+
+# ============================================================
+# 3. SELECCIÓN HACIA ADELANTE (Forward Stepwise) con AIC
+# ============================================================
+datos_step <- X %>% mutate(pobreza_monetaria = y)
+
+modelo_nulo     <- lm(pobreza_monetaria ~ 1, data = datos_step)
+modelo_completo <- lm(pobreza_monetaria ~ ., data = datos_step)
+
+modelo_forward <- step(modelo_nulo,
+                       scope = list(lower = modelo_nulo, upper = modelo_completo),
+                       direction = "forward", trace = FALSE)
+
+vars_forward <- names(coef(modelo_forward))[-1]
+cat("\nForward AIC:", length(vars_forward), "variables\n")
+print(vars_forward)
+cat("AIC:", round(AIC(modelo_forward), 2),
+    "| R² ajustado:", round(summary(modelo_forward)$adj.r.squared, 4), "\n")
+
+# ---- Gráfico evolución del AIC (se detiene en el óptimo) ----
+seleccionadas_fwd <- c(); restantes <- setdiff(names(datos_step), "pobreza_monetaria")
+aic_actual <- AIC(lm(pobreza_monetaria ~ 1, data = datos_step))
+evol <- data.frame(paso = 0, aic = aic_actual)
+repeat {
+  mejor_aic <- Inf; mejor_var <- NA
+  for (v in restantes) {
+    f <- as.formula(paste("pobreza_monetaria ~", paste(c(seleccionadas_fwd, v), collapse = " + ")))
+    a <- AIC(lm(f, data = datos_step))
+    if (a < mejor_aic) { mejor_aic <- a; mejor_var <- v }
+  }
+  if (mejor_aic >= aic_actual) break
+  seleccionadas_fwd <- c(seleccionadas_fwd, mejor_var)
+  restantes <- setdiff(restantes, mejor_var)
+  aic_actual <- mejor_aic
+  evol <- rbind(evol, data.frame(paso = length(seleccionadas_fwd), aic = mejor_aic))
+}
+
+g_aic <- ggplot(evol, aes(x = paso, y = aic)) +
+  geom_line(color = COL_BANDA, linewidth = 0.8) +
+  geom_point(color = COL_PUNTO, size = 2) +
+  labs(x = "Número de variables incorporadas", y = "AIC",
+       title = "Evolución del AIC en la selección hacia adelante") +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold", size = 13),
+        panel.grid.minor = element_blank())
+
+ggsave(file.path(ruta_out, "fig_forward_aic.png"), g_aic, width = 8, height = 5, dpi = 300)
+
+# ============================================================
+# 4. BEST SUBSET (mejor subconjunto) con BIC
+# ============================================================
+# Pre-filtrar candidatas: LASSO 1se + las primeras 18 del forward
+# (las más relevantes; evita sobreparametrización y acelera el cálculo)
+candidatas_best <- unique(c(seleccionadas_1se, vars_forward[1:18]))
+cat("\nCandidatas para best subset:", length(candidatas_best), "\n")
+
+datos_best <- X %>% dplyr::select(all_of(candidatas_best)) %>%
+  mutate(pobreza_monetaria = y)
+
+best <- regsubsets(pobreza_monetaria ~ ., data = datos_best,
+                   nvmax = 15, method = "exhaustive")
+best_sum <- summary(best)
+
+mejor_bic <- which.min(best_sum$bic)
+vars_best <- names(coef(best, mejor_bic))[-1]
+cat("Best subset BIC:", mejor_bic, "variables\n")
+print(vars_best)
+
+# ---- Gráfico del BIC ----
+df_bic <- data.frame(n_vars = seq_along(best_sum$bic), bic = best_sum$bic)
+g_bic <- ggplot(df_bic, aes(x = n_vars, y = bic)) +
+  geom_line(color = COL_BANDA, linewidth = 0.8) +
+  geom_point(color = COL_PUNTO, size = 2) +
+  geom_point(data = df_bic[mejor_bic, ], color = COL_MIN, size = 3.5) +
+  geom_vline(xintercept = mejor_bic, linetype = "dashed", color = COL_MIN, linewidth = 0.5) +
+  annotate("text", x = mejor_bic, y = max(df_bic$bic),
+           label = paste0("Mínimo: ", mejor_bic, " variables"),
+           hjust = -0.1, vjust = 1, size = 3.3, color = COL_MIN) +
+  labs(x = "Número de variables", y = "BIC",
+       title = "Criterio BIC por tamaño de modelo (best subset)") +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold", size = 13),
+        panel.grid.minor = element_blank())
+
+ggsave(file.path(ruta_out, "fig_best_bic.png"), g_bic, width = 8, height = 5, dpi = 300)
+
+# ============================================================
+# 5. CONSENSO ENTRE MÉTODOS
+# ============================================================
+# Tratar LASSO como un método (unión de min y 1se)
+lasso_todas <- unique(c(seleccionadas_1se, seleccionadas_min))
+
+conteo <- data.frame(variable = unique(c(lasso_todas, vars_forward, vars_best))) %>%
+  mutate(
+    LASSO   = variable %in% lasso_todas,
+    Forward = variable %in% vars_forward,
+    Best    = variable %in% vars_best,
+    n_metodos = LASSO + Forward + Best
+  ) %>%
+  arrange(desc(n_metodos), variable)
+
+cat("\n=== CONSENSO ENTRE MÉTODOS ===\n")
+print(conteo, row.names = FALSE)
+
+cat("\nNúcleo (3 métodos):\n")
+print(conteo$variable[conteo$n_metodos == 3])
+
+# ============================================================
+# 6. GUARDAR DATASETS PARA COMPARAR FAY-HERRIOT
+# ============================================================
+guardar_dataset <- function(vars, nombre) {
+  d <- matriz_sae %>%
+    dplyr::select(cod_mun, Municipio, pobreza_monetaria, varianza_pobreza,
+                  all_of(vars))
+  saveRDS(d, file.path(ruta_out, nombre))
+  cat(nombre, ":", dim(d), "| NA:", sum(is.na(d)), "\n")
+}
+
+cat("\n=== Guardando datasets ===\n")
+guardar_dataset(seleccionadas_1se, "datos_fh_1se.rds")
+guardar_dataset(seleccionadas_min, "datos_fh_min.rds")
+guardar_dataset(vars_forward,      "datos_fh_forward.rds")
+guardar_dataset(vars_best,         "datos_fh_best.rds")
+
+cat("\nScript 03 completado.\n")

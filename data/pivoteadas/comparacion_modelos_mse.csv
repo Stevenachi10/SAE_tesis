@@ -1,0 +1,8 @@
+"modelo","n_vars","convergio","cv_fh","mse_medio","n_signif","vif_max"
+"M1_nucleo9",9,"TRUE",11.223,0.001564,"7/9",4.15
+"M2_base10",10,"TRUE",10.765,0.001404,"10/10",6.83
+"M3_+peso_relativo",11,"ERROR",NA,NA,NA,NA
+"M4_+predios_pc",11,"TRUE",10.888,0.00146,"9/11",6.94
+"M5_+extorsion",11,"TRUE",10.898,0.001445,"9/11",6.97
+"M6_todas13",13,"ERROR",NA,NA,NA,NA
+"M7_nucleo_extorsion",10,"TRUE",11.361,0.001611,"6/10",4.18
