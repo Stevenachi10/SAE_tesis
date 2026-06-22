@@ -1,0 +1,85 @@
+"departamento","Municipio","pobreza_eblup","cv","gamma"
+"Cauca","Almaguer",56,8,0.113
+"Cauca","Argelia",25.1,19.1,0.425
+"Cauca","Balboa",49.1,9.1,0.125
+"Cauca","Bolívar",53.8,7.9,0.217
+"Cauca","Buenos Aires",42,10.9,0.148
+"Cauca","Cajibío",47.1,9,0.193
+"Cauca","Caldono",57.7,9.6,0.135
+"Cauca","Caloto",38.8,10.5,0.247
+"Cauca","Corinto",31.9,11.9,0.316
+"Cauca","El Tambo",49.5,7.5,0.407
+"Cauca","Florencia",50.6,9.1,0.111
+"Cauca","Guachené",31.5,8.3,0.669
+"Cauca","Guapi",57.6,7.6,0.254
+"Cauca","Inzá",48.4,10.1,0.105
+"Cauca","Jambaló",58.2,9.9,0.141
+"Cauca","La Sierra",49.1,9.4,0.13
+"Cauca","La Vega",55.3,8.1,0.122
+"Cauca","López de Micay",59.4,9,0.109
+"Cauca","Mercaderes",46.6,10,0.138
+"Cauca","Miranda",21.6,12.8,0.607
+"Cauca","Morales",52.2,9.3,0.121
+"Cauca","Padilla",33.7,12.5,0.2
+"Cauca","Patía",45.1,8.3,0.356
+"Cauca","Piamonte",46.5,10.6,0.134
+"Cauca","Piendamó - Tunía",36.2,9.1,0.464
+"Cauca","Popayán",38.8,2.6,0.942
+"Cauca","Puerto Tejada",22,12.4,0.637
+"Cauca","Puracé",46,9.9,0.171
+"Cauca","Páez",58.4,8.9,0.246
+"Cauca","Rosas",43.7,10.2,0.144
+"Cauca","San Sebastián",47.2,9.4,0.194
+"Cauca","Santa Rosa",53,9.6,0.109
+"Cauca","Santander de Quilichao",26.3,8.8,0.717
+"Cauca","Silvia",58.4,6.8,0.343
+"Cauca","Sotará Paispamba",44.5,10,0.216
+"Cauca","Sucre",52,9.1,0.078
+"Cauca","Suárez",38.3,12.2,0.198
+"Cauca","Timbiquí",48.8,9.1,0.262
+"Cauca","Timbío",41.5,10,0.269
+"Cauca","Toribío",55.3,8.7,0.111
+"Cauca","Totoró",54.8,8.2,0.107
+"Cauca","Villa Rica",27.9,10.3,0.586
+"Valle del Cauca","Alcalá",31.8,12.6,0.242
+"Valle del Cauca","Andalucía",18.6,14.5,0.614
+"Valle del Cauca","Ansermanuevo",30.8,11.7,0.353
+"Valle del Cauca","Argelia",37.5,10.8,0.28
+"Valle del Cauca","Bolívar",19.5,10.1,0.801
+"Valle del Cauca","Buenaventura",58.7,6.6,0.526
+"Valle del Cauca","Bugalagrande",18.8,13.5,0.662
+"Valle del Cauca","Caicedonia",33.9,7.6,0.65
+"Valle del Cauca","Cali",23.5,2.8,0.975
+"Valle del Cauca","Calima",19.9,15,0.57
+"Valle del Cauca","Candelaria",10.4,15.9,0.85
+"Valle del Cauca","Cartago",27.4,11.1,0.563
+"Valle del Cauca","Dagua",19.3,15.9,0.561
+"Valle del Cauca","El Cairo",27.2,13.7,0.382
+"Valle del Cauca","El Cerrito",15.7,16.4,0.651
+"Valle del Cauca","El Dovio",36.1,12.8,0.196
+"Valle del Cauca","El Águila",29.2,12.4,0.425
+"Valle del Cauca","Florida",21.1,17.4,0.37
+"Valle del Cauca","Ginebra",23.2,12.1,0.591
+"Valle del Cauca","Guacarí",14.5,11,0.861
+"Valle del Cauca","Guadalajara de Buga",18,10.1,0.82
+"Valle del Cauca","Jamundí",20,9.6,0.806
+"Valle del Cauca","La Cumbre",17.3,13.5,0.722
+"Valle del Cauca","La Unión",26.8,13.5,0.338
+"Valle del Cauca","La Victoria",27.4,12.7,0.385
+"Valle del Cauca","Obando",28.6,13,0.34
+"Valle del Cauca","Palmira",21.2,9.4,0.786
+"Valle del Cauca","Pradera",19.4,12.4,0.7
+"Valle del Cauca","Restrepo",22.8,14.1,0.474
+"Valle del Cauca","Riofrío",27.6,12.8,0.367
+"Valle del Cauca","Roldanillo",23.9,14.8,0.366
+"Valle del Cauca","San Pedro",19.5,14.7,0.563
+"Valle del Cauca","Sevilla",31.8,12,0.283
+"Valle del Cauca","Toro",33.1,12,0.227
+"Valle del Cauca","Trujillo",34.6,11.2,0.29
+"Valle del Cauca","Tuluá",25.8,8.1,0.763
+"Valle del Cauca","Ulloa",26,12.3,0.49
+"Valle del Cauca","Versalles",34.7,11.6,0.218
+"Valle del Cauca","Vijes",23.3,12.4,0.563
+"Valle del Cauca","Yotoco",20.7,10.3,0.753
+"Valle del Cauca","Yumbo",27.5,4.5,0.916
+"Valle del Cauca","Zarzal",19.7,11.8,0.718

@@ -1,0 +1,3 @@
+"modelo","n_vars","conv","cv_fh","mse","n_signif","vif_max"
+"cat617_numerica",10,TRUE,10.765,0.001404,"10/10",6.83
+"cat617_dummy_sexta",10,TRUE,11.327,0.001595,"6/10",7.98

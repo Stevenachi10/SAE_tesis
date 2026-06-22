@@ -310,3 +310,4 @@ print(summary(matriz_sae$varianza_pobreza))
 saveRDS(matriz_sae, file.path(ruta_out, "matriz_sae_final_v2.rds"))
 write.csv(matriz_sae, file.path(ruta_out, "matriz_sae_final_v2.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
+
