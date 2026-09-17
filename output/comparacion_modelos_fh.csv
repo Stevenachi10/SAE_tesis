@@ -1,16 +1,27 @@
-"modelo","n_vars","conv","cv_fh","mse","n_signif","vif_max"
-"M14_+desplaz+terc+cat617",11,TRUE,10.643,0.001373,"10/11",6.84
-"M11_+cat617+terciario",10,TRUE,10.762,0.001414,"9/10",6.64
-"M09_+desplaz+cat617",10,TRUE,10.765,0.001404,"10/10",6.83
-"M03_+cat617",9,TRUE,10.796,0.001419,"9/9",6.64
-"M13_+cat617+iica",10,TRUE,10.933,0.001495,"9/10",6.64
-"M15_+desplaz+cat617+iica",11,TRUE,10.934,0.001488,"9/11",6.84
-"M10_+desplaz+terciario",10,TRUE,11.028,0.001506,"10/10",4.27
-"M04_+terciario",9,TRUE,11.109,0.001537,"8/9",4.16
-"M01_nucleo8",8,TRUE,11.213,0.001566,"7/8",4.09
-"M02_+desplaz",9,TRUE,11.223,0.001564,"7/9",4.15
-"M07_+victimas",9,TRUE,11.223,0.001562,"6/9",4.17
-"M08_+viol_intra",9,TRUE,11.316,0.001592,"8/9",4.66
-"M05_+iica",9,TRUE,11.327,0.001637,"7/9",4.1
-"M12_+desplaz+iica",10,TRUE,11.366,0.001644,"7/10",4.16
-"M06_+mort_infantil",9,TRUE,11.378,0.001649,"7/9",4.15
+"modelo","especificacion","n_vars","convergencia","cv","n_signif","vif_max","aic","bic","todas_signif"
+"M12","Núcleo + categoria_617 + pct_rural",11,TRUE,8.379,10,10.1,-243.63,-212.03,FALSE
+"M18","Núcleo + alcantarillado_2018 + categoria_617 + pct_rural",12,TRUE,8.38,10,19.07,-243.6,-209.57,FALSE
+"M23","Núcleo + categoria_617 + mort_infantil_1a_2020 + pct_rural",12,TRUE,8.544,10,10.11,-242.06,-208.03,FALSE
+"M25","Núcleo + categoria_617 + pct_rural + pct_terciario_2023",12,TRUE,8.599,10,10.33,-241.11,-207.08,FALSE
+"M09","Núcleo + alcantarillado_2018 + pct_rural",11,TRUE,9.994,7,18.69,-224.78,-193.18,FALSE
+"M22","Núcleo + alcantarillado_2018 + pct_rural + pct_terciario_2023",12,TRUE,10.058,8,18.77,-223.81,-189.78,FALSE
+"M20","Núcleo + alcantarillado_2018 + mort_infantil_1a_2020 + pct_rural",12,TRUE,10.145,7,18.91,-223.54,-189.51,FALSE
+"M05","Núcleo + pct_rural",10,TRUE,10.15,9,6.98,-223.01,-193.84,FALSE
+"M16","Núcleo + pct_rural + pct_terciario_2023",11,TRUE,10.214,9,7,-221.98,-190.38,FALSE
+"M14","Núcleo + mort_infantil_1a_2020 + pct_rural",11,TRUE,10.232,8,6.99,-222.46,-190.86,FALSE
+"M26","Núcleo + mort_infantil_1a_2020 + pct_rural + pct_terciario_2023",12,TRUE,10.286,9,7.1,-221.48,-187.44,FALSE
+"M13","Núcleo + categoria_617 + pct_terciario_2023",11,TRUE,10.643,10,6.84,-216.13,-184.53,FALSE
+"M19","Núcleo + alcantarillado_2018 + categoria_617 + pct_terciario_2023",12,TRUE,10.708,10,13.57,-215.21,-181.18,FALSE
+"M03","Núcleo + categoria_617",10,TRUE,10.765,10,6.83,-214.7,-185.53,TRUE
+"M07","Núcleo + alcantarillado_2018 + categoria_617",11,TRUE,10.772,10,13.09,-214.78,-183.18,FALSE
+"M24","Núcleo + categoria_617 + mort_infantil_1a_2020 + pct_terciario_2023",12,TRUE,10.799,10,7,-214.48,-180.45,FALSE
+"M11","Núcleo + categoria_617 + mort_infantil_1a_2020",11,TRUE,10.885,10,7,-213.4,-181.8,FALSE
+"M17","Núcleo + alcantarillado_2018 + categoria_617 + mort_infantil_1a_2020",12,TRUE,10.936,10,13.21,-212.94,-178.91,FALSE
+"M06","Núcleo + pct_terciario_2023",10,TRUE,11.028,10,4.27,-209.3,-180.13,TRUE
+"M10","Núcleo + alcantarillado_2018 + pct_terciario_2023",11,TRUE,11.136,10,13.05,-207.26,-175.66,FALSE
+"M15","Núcleo + mort_infantil_1a_2020 + pct_terciario_2023",11,TRUE,11.203,10,4.32,-207.21,-175.6,FALSE
+"M01","Núcleo",9,TRUE,11.223,7,4.15,-206.41,-179.67,FALSE
+"M02","Núcleo + alcantarillado_2018",10,TRUE,11.309,7,12.42,-204.81,-175.64,FALSE
+"M21","Núcleo + alcantarillado_2018 + mort_infantil_1a_2020 + pct_terciario_2023",12,TRUE,11.313,10,13.6,-205.21,-171.18,FALSE
+"M04","Núcleo + mort_infantil_1a_2020",10,TRUE,11.387,7,4.21,-204.39,-175.22,FALSE
+"M08","Núcleo + alcantarillado_2018 + mort_infantil_1a_2020",11,TRUE,11.481,7,12.94,-202.77,-171.17,FALSE

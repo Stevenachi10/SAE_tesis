@@ -1,0 +1,5 @@
+"criterio_vecindad","especificacion","n_vars","converge","rho","sigma2_u","gamma_medio","cv","cv_max","cv_base","dif_cv","n_comunes","n_cv_na","n_fuera_rango","vif_max","var_limite","convergencia","coherente","alineado","rho_al_limite","segundos"
+"Queen, orden 1","M1",6,TRUE,0.6915,0.00136864,0.3953,10.43,21.678,10.476,-0.046,84,0,0,9.74,FALSE,TRUE,TRUE,FALSE,FALSE,0.3
+"Queen, orden 1","M2",7,TRUE,0.4967,0.00151425,0.398,10.47,21.975,10.257,0.213,84,0,0,9.8,FALSE,TRUE,TRUE,FALSE,FALSE,0.2
+"Queen, orden 1","M3",9,TRUE,5e-04,0.00142476,0.373,10.258,21.573,10.22,0.038,84,0,0,9.95,FALSE,TRUE,TRUE,FALSE,FALSE,0.3
+"Queen, orden 1","M3s",8,TRUE,0.3648,0.00151351,0.3912,10.453,21.461,10.242,0.21,84,0,0,9.93,FALSE,TRUE,TRUE,FALSE,FALSE,0.2

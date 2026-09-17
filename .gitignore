@@ -1,6 +1,127 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-.positai
-.RDataTmp*
+# ==============================================================================
+# .gitignore — SAE_tesis
+# ------------------------------------------------------------------------------
+# Lista blanca para todo el proyecto: se ignora todo y solo se suben los
+# archivos nombrados con "!". Los archivos ignorados siguen en el equipo; solo
+# quedan fuera del repositorio.
+#
+# Si un script nuevo genera otra salida que deba subirse, hay que agregar aqui
+# su linea "!/output/...".
+# ==============================================================================
+ 
+/*
+!/.gitignore
+!/README.md
+!/*.Rproj
+ 
+# ---- scripts/ -----------------------------------------------------------------
+!/scripts/
+/scripts/*
+!/scripts/00_ejecutar_pipeline.R
+!/scripts/01_etapa1_construccion_base.R
+!/scripts/02_1c_seleccion_stepwise.R
+!/scripts/02_2a_modelado_variantes.R
+!/scripts/02_2a_modelado_variantes_diagnostico.R
+!/scripts/02_3_espacial.R
+!/scripts/02_4_robusto.R
+!/scripts/02_4_robusto_diagnostico.R
+!/scripts/03_1_normalidad.R
+ 
+# ---- output/ ------------------------------------------------------------------
+!/output/
+/output/*
+ 
+# 01_etapa1_construccion_base.R
+!/output/matriz_sae_final_v2.rds
+!/output/matriz_sae_final_v2.csv
+!/output/matriz_sae_transformada_v2.rds
+!/output/matriz_sae_transformada_v2.csv
+!/output/listado_covariables.txt
+!/output/diagnostico_faltantes_pre.csv
+!/output/descriptivo_cuantitativas.csv
+!/output/descriptivo_cuantitativas.tex
+!/output/descriptivo_cualitativas.csv
+!/output/descriptivo_cualitativas.tex
+!/output/descriptivo_departamentos.csv
+!/output/diagnostico_asimetria.csv
+!/output/comparacion_medcouple_log.csv
+!/output/fig_exceso_ceros.png
+!/output/fig_dummies_balance.png
+ 
+# 02_1c_seleccion_stepwise.R
+!/output/seleccion_stepwise_completo_both.rds
+!/output/seleccion_stepwise_completo_both.csv
+!/output/seleccion_stepwise_historial_completo_both.csv
+!/output/seleccion_stepwise_singulares_completo_both.csv
+!/output/seleccion_stepwise_descartes_completo_both.csv
+ 
+# 02_2a_modelado_variantes.R y su diagnostico
+!/output/modelado_variantes.rds
+!/output/mod_estimacion.csv
+!/output/mod_cv.csv
+!/output/mod_gamma.csv
+!/output/mod_normalidad.csv
+!/output/modelado_diagnostico.rds
+ 
+# 02_3_espacial.R
+!/output/matriz_proximidad.rds
+!/output/esp_autocorrelacion_queen.csv
+!/output/esp_ajuste_queen.csv
+!/output/espacial.rds
+!/output/fig_esp_vecindad.png
+ 
+# 02_4_robusto.R y su diagnostico
+!/output/robusto.rds
+!/output/rob_estimacion.csv
+!/output/rob_cv.csv
+!/output/rob_desplazamiento.csv
+!/output/rob_coeficientes.csv
+!/output/rob_sensibilidad_k.csv
+!/output/rob_bc_banda.csv
+!/output/rob_bc_resumen.csv
+!/output/rob_sensibilidad_mult.csv
+!/output/robusto_diagnostico.rds
+!/output/fig_rob_desplazamiento.png
+!/output/fig_rob_cv.png
+ 
+# 03_1_normalidad.R
+!/output/sup_normalidad.csv
+!/output/sup_normalidad.rds
+!/output/figuras/
+/output/figuras/*
+!/output/figuras/qq_*.png
+!/output/figuras/dens_res_*.png
+!/output/figuras/dens_ran_*.png
+ 
+# ---- data/ --------------------------------------------------------------------
+!/data/
+/data/*
+ 
+# data/pivoteadas/: insumos del script 01 y cartografia recortada
+!/data/pivoteadas/
+/data/pivoteadas/*
+!/data/pivoteadas/README.md
+!/data/pivoteadas/afiliados_regimen_2022.rds
+!/data/pivoteadas/cov_carretera.rds
+!/data/pivoteadas/cov_demografia_etnia.rds
+!/data/pivoteadas/cov_demografica_cauca_valle.rds
+!/data/pivoteadas/cov_descripciongeneral.rds
+!/data/pivoteadas/cov_desempe*fiscal.rds
+!/data/pivoteadas/cov_distancias.rds
+!/data/pivoteadas/cov_educacion_cauca_valle.rds
+!/data/pivoteadas/cov_ejecucion_ingresos.rds
+!/data/pivoteadas/cov_fiscal.rds
+!/data/pivoteadas/cov_laboral.rds
+!/data/pivoteadas/cov_pib.rds
+!/data/pivoteadas/cov_salud.rds
+!/data/pivoteadas/cov_seguridad.rds
+!/data/pivoteadas/cov_territorial_cauca_valle.rds
+!/data/pivoteadas/cov_vivienda.rds
+!/data/pivoteadas/terridata_conflicto_2023.rds
+!/data/pivoteadas/MGN2025_MPIO_GRAFICO/
+ 
+# data/raw/: variable dependiente
+!/data/raw/
+/data/raw/*
+!/data/raw/varianza estimador.xlsx
+ 

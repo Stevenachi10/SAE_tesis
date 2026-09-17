@@ -1,0 +1,12 @@
+"familia","especificacion","escala","clave","disponible","interpretacion_shapiro","nota","ef_asimetria","ef_curtosis","ef_shapiro_W","ef_shapiro_p","res_asimetria","res_curtosis","res_shapiro_W","res_shapiro_p"
+"base","M1","original","M1_reml_original",TRUE,"evaluacion conjunta",NA,-0.3735,4.092,0.9593,0.00949,0.01984,3.055,0.9958,0.9959
+"base","M1","log","M1_reml_log",TRUE,"evaluacion conjunta",NA,-0.2972,3.506,0.9875,0.6005,-0.3819,2.873,0.9837,0.3708
+"base","M1","logit","M1_reml_logit",TRUE,"evaluacion conjunta",NA,-0.2156,3.879,0.9754,0.107,-0.2237,2.908,0.9898,0.7534
+"base","M2","original","M2_reml_original",TRUE,"evaluacion conjunta",NA,-0.445,3.909,0.9451,0.00133,-0.1006,3.549,0.9873,0.5878
+"base","M2","log","M2_reml_log",TRUE,"evaluacion conjunta",NA,-0.4657,3.637,0.9772,0.1415,-0.6924,3.409,0.967,0.02963
+"base","M2","logit","M2_reml_logit",TRUE,"evaluacion conjunta",NA,-0.3001,3.746,0.9634,0.0173,-0.4802,3.468,0.9767,0.1317
+"base","M3","original","M3_reml_original",TRUE,"evaluacion conjunta",NA,-0.1531,4.289,0.9389,0.0006025,-0.1279,3.65,0.9873,0.5823
+"base","M3","log","M3_reml_log",TRUE,"evaluacion conjunta",NA,-0.3653,4.111,0.9748,0.09879,-0.6277,3.29,0.9683,0.03634
+"base","M3","logit","M3_reml_logit",TRUE,"evaluacion conjunta",NA,-0.01662,4.178,0.9471,0.001734,-0.4348,3.567,0.9768,0.1342
+"espacial","M1","original","esp_M1",TRUE,"descriptivo",NA,0.2238,2.259,0.9799,0.2119,0.1414,3.397,0.9897,0.7496
+"espacial","M2","original","esp_M2",TRUE,"descriptivo",NA,-0.2068,2.791,0.9859,0.4911,-0.002774,3.577,0.9837,0.3668
