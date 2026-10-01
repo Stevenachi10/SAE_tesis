@@ -43,7 +43,6 @@ PASOS <- c(
   "03_0_normalidad.R"                        = TRUE,
   "03_1_precision_diagnosticos.R"            = TRUE,
   "03_2_agregado_departamental.R"            = TRUE,
-  "03_3_distribucion_gamma.R"                = TRUE,
   "04_1_benchmarking_m1log.R"                = TRUE,
 
   # Etapa IV: contribución de las variables auxiliares (Shapley)
