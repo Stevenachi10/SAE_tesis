@@ -69,6 +69,15 @@
 # búsqueda en rho = 0,5 con un punto de partida fijo.
 #
 # ------------------------------------------------------------------------------
+# SOBRE EL FACTOR DE ENCOGIMIENTO
+# ------------------------------------------------------------------------------
+# emdi no devuelve el factor de encogimiento en el caso espacial: la rama
+# correspondiente de fh() llama a eblup_SFH(), que no lo calcula. Se obtiene
+# aquí a partir de los componentes de varianza estimados y se guarda por
+# dominio, de modo que la Etapa III pueda emplearlo sin recurrir a la expresión
+# escalar del modelo no espacial, que no corresponde a esta estructura.
+#
+# ------------------------------------------------------------------------------
 # ENTRADAS
 # ------------------------------------------------------------------------------
 #   data/pivoteadas/MGN2025_MPIO_GRAFICO/MGN_ADM_MPIO_GRAFICO.shp
@@ -456,20 +465,35 @@ ajustar_esp <- function(vars, W_k) {
   comp <- extraer_componentes(r)
   prec <- precision_de(r)
   
-  # Diagonal de la matriz de encogimiento bajo estructura autorregresiva.
+  # Matriz de encogimiento bajo estructura autorregresiva.
   # La covarianza de los efectos aleatorios es sigma2_u (A'A)^{-1} con
   # A = I - rho W. Se resuelve el sistema una sola vez sobre A'A en lugar de
   # invertir A y su traspuesta por separado.
-  gam <- tryCatch({
+  #
+  # El predictor es theta = X beta + B (directo - X beta). La diagonal de B es
+  # el peso sobre el estimador directo del propio dominio; la suma de cada fila
+  # es el peso total sobre los estimadores directos, incluidos los de los
+  # vecinos. En el modelo no espacial B es diagonal y ambas cantidades
+  # coinciden con gamma_i, de modo que la diagonal por si sola subestima el
+  # prestamo de informacion del modelo espacial.
+  B <- tryCatch({
     if (!comp$coherente) stop("componentes no coherentes")
     A     <- diag(n_dom) - comp$rho * W_k
     Omega <- comp$s2u * solve(t(A) %*% A)
-    diag(Omega %*% solve(Omega + diag(PSI)))
-  }, error = function(e) rep(NA_real_, n_dom))
+    Omega %*% solve(Omega + diag(PSI))
+  }, error = function(e) NULL)
+  
+  if (is.null(B)) {
+    gam      <- rep(NA_real_, n_dom)
+    gam_fila <- rep(NA_real_, n_dom)
+  } else {
+    gam      <- diag(B)
+    gam_fila <- rowSums(B)
+  }
   
   list(ajuste = r, limite = limite, alineado = alineado(r),
        s2u = comp$s2u, rho = comp$rho, convergencia = comp$convergencia,
-       coherente = comp$coherente, gamma = gam,
+       coherente = comp$coherente, gamma = gam, gamma_fila = gam_fila,
        estimacion = prec$estimacion, mse = prec$mse, se = prec$se,
        cv = prec$cv, n_fuera_rango = prec$n_fuera_rango,
        n_cv_na = prec$n_cv_na)
@@ -484,6 +508,9 @@ vif_de <- function(vars) {
 # ------------------------------------------------------------------------------
 # Fila de resultados del ajuste espacial
 # ------------------------------------------------------------------------------
+# gamma_medio resume la diagonal de la matriz de encogimiento y
+# gamma_fila_medio la suma de sus filas. Las dos se reportan porque en el
+# modelo espacial no coinciden.
 fila_ajuste <- function(k, nm, res, cv_base_vec, segundos = NA_real_) {
   
   base <- data.frame(criterio_vecindad = k, especificacion = nm,
@@ -493,7 +520,8 @@ fila_ajuste <- function(k, nm, res, cv_base_vec, segundos = NA_real_) {
   if (is.null(res)) {
     return(cbind(base, data.frame(
       converge = FALSE, rho = NA_real_, sigma2_u = NA_real_,
-      gamma_medio = NA_real_, cv = NA_real_, cv_max = NA_real_,
+      gamma_medio = NA_real_, gamma_fila_medio = NA_real_,
+      cv = NA_real_, cv_max = NA_real_,
       cv_base = NA_real_, dif_cv = NA_real_, n_comunes = NA_integer_,
       n_cv_na = NA_integer_, n_fuera_rango = NA_integer_,
       vif_max = vif_de(ESPECIFICACIONES[[nm]]), var_limite = NA,
@@ -504,24 +532,25 @@ fila_ajuste <- function(k, nm, res, cv_base_vec, segundos = NA_real_) {
   cc <- comparar_cv(res$cv, cv_base_vec)
   
   cbind(base, data.frame(
-    converge       = TRUE,
-    rho            = round(res$rho, 4),
-    sigma2_u       = signif(res$s2u, 6),
-    gamma_medio    = round(mean(res$gamma, na.rm = TRUE), 4),
-    cv             = round(cc$cv, 3),
-    cv_max         = round(cc$cv_max, 3),
-    cv_base        = round(cc$cv_base, 3),
-    dif_cv         = round(cc$dif, 3),
-    n_comunes      = cc$n_comunes,
-    n_cv_na        = res$n_cv_na,
-    n_fuera_rango  = res$n_fuera_rango,
-    vif_max        = round(vif_de(ESPECIFICACIONES[[nm]]), 2),
-    var_limite     = res$limite,
-    convergencia   = res$convergencia,
-    coherente      = res$coherente,
-    alineado       = res$alineado,
-    rho_al_limite  = !is.na(res$rho) && abs(res$rho) > RHO_LIMITE,
-    segundos       = round(segundos, 1),
+    converge         = TRUE,
+    rho              = round(res$rho, 4),
+    sigma2_u         = signif(res$s2u, 6),
+    gamma_medio      = round(mean(res$gamma, na.rm = TRUE), 4),
+    gamma_fila_medio = round(mean(res$gamma_fila, na.rm = TRUE), 4),
+    cv               = round(cc$cv, 3),
+    cv_max           = round(cc$cv_max, 3),
+    cv_base          = round(cc$cv_base, 3),
+    dif_cv           = round(cc$dif, 3),
+    n_comunes        = cc$n_comunes,
+    n_cv_na          = res$n_cv_na,
+    n_fuera_rango    = res$n_fuera_rango,
+    vif_max          = round(vif_de(ESPECIFICACIONES[[nm]]), 2),
+    var_limite       = res$limite,
+    convergencia     = res$convergencia,
+    coherente        = res$coherente,
+    alineado         = res$alineado,
+    rho_al_limite    = !is.na(res$rho) && abs(res$rho) > RHO_LIMITE,
+    segundos         = round(segundos, 1),
     stringsAsFactors = FALSE))
 }
 
@@ -626,8 +655,9 @@ ajuste_queen <- do.call(rbind, filas)
 cat("\n")
 print(ajuste_queen %>%
         select(especificacion, n_vars, rho, sigma2_u, gamma_medio,
-               cv, cv_base, dif_cv, n_comunes, n_fuera_rango,
-               var_limite, convergencia, alineado, rho_al_limite),
+               gamma_fila_medio, cv, cv_base, dif_cv, n_comunes,
+               n_fuera_rango, var_limite, convergencia, alineado,
+               rho_al_limite),
       row.names = FALSE)
 
 write.csv(ajuste_queen, file.path(ruta_out, "esp_ajuste_queen.csv"),
@@ -636,7 +666,17 @@ write.csv(ajuste_queen, file.path(ruta_out, "esp_ajuste_queen.csv"),
 
 # ==============================================================================
 # GUARDADO
+# ------------------------------------------------------------------------------
+# Se guardan los vectores de encogimiento por dominio, y no el objeto res_queen
+# completo, porque este ultimo contiene de nuevo los ajustes de emdi que ya se
+# almacenan en ajustes_esp.
 # ==============================================================================
+
+gamma_esp <- lapply(res_queen, function(r)
+  if (is.null(r)) NULL else r$gamma)
+
+gamma_esp_fila <- lapply(res_queen, function(r)
+  if (is.null(r)) NULL else r$gamma_fila)
 
 saveRDS(
   list(
@@ -652,6 +692,9 @@ saveRDS(
     avisos_base      = base_avisos,
     cv_base          = base_cv,
     ajustes_esp      = esp_ajustes,
+    gamma_esp        = gamma_esp,
+    gamma_esp_fila   = gamma_esp_fila,
+    cod_mun          = datos$cod_mun,
     semilla          = SEMILLA,
     B_perm           = B_PERM,
     tol              = TOL,

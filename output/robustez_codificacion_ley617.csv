@@ -1,3 +1,0 @@
-"modelo","especificacion","n_vars","convergencia","cv","n_signif","vif_max","aic","bic"
-"ordinal","Escala ordinal",10,TRUE,10.765,10,6.83,-214.7,-185.53
-"binaria","Indicadora de sexta",10,TRUE,11.327,6,7.98,-204.33,-175.16

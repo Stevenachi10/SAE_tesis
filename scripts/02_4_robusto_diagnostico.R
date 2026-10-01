@@ -18,9 +18,12 @@
 #
 # La comparación del coeficiente de variación entre el modelo convencional y el
 # robusto enfrenta estimadores distintos del error cuadrático medio: la
-# aproximación analítica de Prasad-Rao en el primero y la linealización en el
-# segundo. La comparación se reporta con esa salvedad y no sustenta por sí sola
-# ninguna conclusión.
+# aproximación analítica de Prasad-Rao en el primero y el bootstrap paramétrico
+# en el segundo. Ambos incorporan la variabilidad debida a la estimación de los
+# parámetros, pero no son el mismo procedimiento; la comparación se reporta con
+# esa salvedad. La sensibilidad de los ajustes robustos al estimador del error
+# cuadrático medio (bootstrap frente a pseudolinealización) se examina en
+# 02_4e_comparacion_mse_pseudo_boot.R.
 #
 # Los umbrales del coeficiente de variación se reportan como indicadores
 # descriptivos de la distribución. No constituyen criterios formales de
@@ -284,9 +287,10 @@ if (any(tabla_cv$n_excluidos > 0)) {
         row.names = FALSE)
 }
 
-cat("\nNota: el coeficiente de variacion del ajuste convencional procede de la\n")
-cat("aproximacion analitica y el de los ajustes robustos de la linealizacion.\n")
-cat("No son estimadores equivalentes del error cuadratico medio.\n")
+cat("\nNota: el coeficiente de variacion del ajuste convencional procede del\n")
+cat("estimador", rob$mse_base, "y el de los ajustes robustos del estimador",
+    rob$mse_robusto, "\n")
+cat("No son el mismo procedimiento de estimacion del error cuadratico medio.\n")
 
 write.csv(tabla_cv, file.path(ruta_out, "rob_cv.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
