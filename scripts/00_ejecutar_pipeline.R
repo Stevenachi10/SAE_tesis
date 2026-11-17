@@ -61,14 +61,11 @@ PASOS <- c(
   "06_0_estimaciones_coef_cv_m1_log.R"       = TRUE,
 
   # Etapa IV: contribución de las variables auxiliares (Shapley)
-  "05_1_shapley_kicb2_m1_original.R"         = TRUE,
-  "05_2_shapley_mse_m1_log.R"                = TRUE,
-  "05_3_shapley_cv_m1_log.R"                 = TRUE,
-  "05_shapley_etapa4_completo.R"             = TRUE,
+  "05_1_shapley_etapa4_completo.R"             = TRUE,
 
   # Mapas y análisis exploratorio de las especificaciones
   "06_1_mapas_m1_log.R"                      = TRUE,
-  "07_2.R"                                   = TRUE,
+  "07_2_exploratorio_especificaciones.R"                                   = TRUE,
 
   # Tablero interactivo
   "08_exportar_datos_dashboard.R"            = TRUE,

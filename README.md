@@ -40,7 +40,7 @@ con los scripts. Se conservan tres:
 | `01` y `01_1` | Construcción de la base integrada y verificación de la imputación |
 | `02_1c` a `02_4g` | Selección de covariables (con su estabilidad y la selección en escala logarítmica) y ajuste de los modelos Fay-Herriot estándar, espacial y robusto |
 | `03_0` a `04_1` | Supuestos, precisión, incertidumbre de la referencia, consistencia con las cifras departamentales, sensibilidad a la escala de selección y benchmarking |
-| `05_1` a `05_3` y `05_shapley_etapa4_completo` | Contribución de las variables auxiliares mediante valores de Shapley (KICb2, MSE y CV) |
+| `05_1` | Contribución de las variables auxiliares mediante valores de Shapley (KICb2, MSE y CV) |
 | `06_0` y `06_1` | Estimaciones finales, coeficientes y mapas |
 | `07_2` | Análisis exploratorio de las especificaciones |
 | `08` y `09` | Tablero interactivo (`output/dashboard_pobreza.html`) |
