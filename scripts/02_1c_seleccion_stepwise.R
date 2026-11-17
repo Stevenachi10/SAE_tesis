@@ -1300,28 +1300,3 @@ cat("Tiempo total:          ",
     round(as.numeric(difftime(Sys.time(), tiempo_total, units = "mins")), 2),
     " minutos\n", sep = "")
 cat("============================================================\n")
-
-
-f6 <- pobreza_monetaria ~ alcantarillado_2018 + pct_rural +
-  partos_calificados_2020 + transferencias_pc +
-  saber11_lectura_2022 + tasa_violencia_intra_2019
-
-f7 <- update(f6, . ~ . + pct_secundario_2023)
-
-arg <- list(vardir = "varianza_pobreza", combined_data = datos,
-            domains = "cod_mun", method = "ml", MSE = FALSE,
-            B = c(0, 500))
-
-sapply(c(123, 2906, 7, 42, 2024), function(s) {
-  a6 <- do.call(fh, c(list(f6), arg, list(seed = s)))
-  a7 <- do.call(fh, c(list(f7), arg, list(seed = s)))
-  a6$model$model_select$KICc - a7$model$model_select$KICc
-})
-
-args(emdi::fh)
-
-?fh
-browseVignettes("emdi")
-browseVignettes("emdi")
-
-file.path(find.package("emdi"), "doc", "vignette_fh.pdf")

@@ -292,7 +292,3 @@ cat("\nArchivos generados en", ruta_out, ":\n")
 cat("  final_coeficientes_m1_log.csv\n")
 cat("  final_estimaciones_municipales_m1_log.csv\n")
 cat("\nProceso terminado.\n")
-
-library(here)
-variantes <- readRDS(here("output", "modelado_variantes.rds"))
-format(variantes$ajustes[["M1_reml_log"]]$model$variance, digits = 6)

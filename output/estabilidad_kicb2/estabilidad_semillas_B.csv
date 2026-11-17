@@ -1,0 +1,8 @@
+"id","tipo","semilla","B","n_municipios","n_vars","kicb2","igual_M1","variables"
+"B1000_s2906","B",2906,1000,84,6,-189.2336,TRUE,"alcantarillado_2018 + pct_rural + partos_calificados_2020 + transferencias_pc + saber11_lectura_2022 + tasa_violencia_intra_2019"
+"B750_s2906","B",2906,750,84,6,-189.0496,TRUE,"alcantarillado_2018 + pct_rural + partos_calificados_2020 + transferencias_pc + saber11_lectura_2022 + tasa_violencia_intra_2019"
+"base_s2906_B500","base",2906,500,84,6,-190.0329,TRUE,"alcantarillado_2018 + pct_rural + partos_calificados_2020 + transferencias_pc + saber11_lectura_2022 + tasa_violencia_intra_2019"
+"semilla_629_B500","semilla",629,500,84,6,-190.3327,TRUE,"alcantarillado_2018 + pct_rural + partos_calificados_2020 + transferencias_pc + saber11_lectura_2022 + tasa_violencia_intra_2019"
+"semilla_2960_B500","semilla",2960,500,84,6,-190.0202,TRUE,"alcantarillado_2018 + pct_rural + partos_calificados_2020 + transferencias_pc + saber11_lectura_2022 + tasa_violencia_intra_2019"
+"semilla_296_B500","semilla",296,500,84,6,-190.3312,TRUE,"alcantarillado_2018 + pct_rural + partos_calificados_2020 + transferencias_pc + saber11_lectura_2022 + tasa_violencia_intra_2019"
+"semilla_6290_B500","semilla",6290,500,84,6,-192.1568,TRUE,"alcantarillado_2018 + pct_rural + partos_calificados_2020 + transferencias_pc + saber11_lectura_2022 + tasa_violencia_intra_2019"

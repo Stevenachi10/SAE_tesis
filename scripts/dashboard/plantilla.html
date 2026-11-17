@@ -1,0 +1,1503 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex">
+<title>Pobreza monetaria municipal estimada, Cauca y Valle del Cauca</title>
+<style>
+:root{
+  --fondo:#f7f6f2; --panel:#ffffff; --borde:#dedbd2; --linea:#ece9e0; --texto:#1f2a2e; --suave:#55636a;
+  --acento:#0f5c6e; --acento-2:#0b3f4d; --res:#e5f1f4; --ref:#a6540f; --no:#5e666a;
+  --radio:10px; --alto-tabs:46px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--fondo);color:var(--texto);
+  font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+.contenedor{max-width:1320px;margin:0 auto;padding:0 16px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+a.salto{position:absolute;left:-999px;top:0;background:#fff;color:var(--acento-2);padding:8px 12px;z-index:100;border-radius:0 0 8px 0}
+a.salto:focus{left:0}
+
+header{background:var(--acento-2);color:#fff;padding:20px 0 16px}
+header h1{margin:0 0 6px;font-size:1.35rem;font-weight:650;letter-spacing:.1px;max-width:980px}
+header p{margin:0 0 3px;color:#d6e8ec;font-size:.92rem;max-width:980px}
+header p.creditos{color:#fff}
+.aviso{margin-top:10px;display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);
+  border-radius:999px;padding:3px 12px;font-size:.82rem;color:#fff}
+
+nav.tabs{position:sticky;top:0;z-index:30;background:var(--fondo);border-bottom:1px solid var(--borde)}
+nav.tabs .contenedor{display:flex;gap:4px;overflow-x:auto;height:var(--alto-tabs)}
+nav.tabs button{appearance:none;border:0;background:transparent;font:inherit;color:var(--suave);padding:0 14px;cursor:pointer;
+  border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs button:hover{color:var(--texto)}
+nav.tabs button[aria-selected="true"]{color:var(--acento-2);font-weight:650;border-bottom-color:var(--acento)}
+
+.global{background:var(--fondo);border-bottom:1px solid var(--borde);padding:8px 0;z-index:25}
+.global .contenedor{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+.global .campo{flex-direction:row;align-items:center;gap:8px;min-width:0}
+@media(min-width:900px){.global{position:sticky;top:var(--alto-tabs)}}
+#selModelo{min-width:300px;max-width:100%}
+#selMun{min-width:220px;max-width:100%}
+
+main{padding:12px 0 40px}
+section.vista{display:none}
+section.vista.activa{display:block}
+.panel{background:var(--panel);border:1px solid var(--borde);border-radius:var(--radio);padding:14px 16px}
+.panel+.panel,.sep{margin-top:16px}
+.panel h2{margin:0 0 8px;font-size:1.02rem}
+.panel h3{margin:16px 0 6px;font-size:.84rem;color:var(--suave);font-weight:650;text-transform:uppercase;letter-spacing:.04em}
+.controles{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-end;margin-bottom:8px}
+.campo{display:flex;flex-direction:column;gap:4px;min-width:140px}
+.campo label,.campo .etq{font-size:.78rem;color:var(--suave);font-weight:650;text-transform:uppercase;letter-spacing:.04em}
+select,input[type=search]{font:inherit;padding:7px 9px;border:1px solid var(--borde);border-radius:8px;background:#fff;color:var(--texto);min-width:0}
+select:focus-visible,input:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.segmentos{display:inline-flex;flex-wrap:wrap;border:1px solid var(--borde);border-radius:8px;overflow:hidden;background:#fff}
+.segmentos button{appearance:none;border:0;background:#fff;font:inherit;padding:7px 12px;cursor:pointer;color:var(--texto);
+  box-shadow:1px 0 0 var(--borde),0 1px 0 var(--borde)}
+.segmentos button[aria-pressed="true"]{background:var(--acento);color:#fff}
+.chk{display:flex;align-items:center;gap:7px;font-size:.9rem;padding-bottom:7px}
+.leyenda-modelos{font-size:.84rem;color:var(--suave);margin:0 0 12px;line-height:1.5}
+.leyenda-modelos b{color:var(--texto)}
+.nota-caja{margin:0 0 12px;padding:8px 12px;border:1px solid #e2c9ad;background:#fbf4ec;border-radius:8px;font-size:.86rem;color:#5a3412}
+
+.cuadricula{display:grid;grid-template-columns:minmax(300px,460px) 1fr;gap:16px;align-items:start}
+@media(max-width:900px){.cuadricula{grid-template-columns:1fr}}
+.cuadricula>*,.columna>*{min-width:0}
+.columna{display:grid;gap:16px}
+
+/* Mapa */
+#mapaLienzo{position:relative;width:100%;max-width:400px;margin:0 auto}
+#mapa{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+#mapa .relleno path{stroke:#8a969b;stroke-width:.6;vector-effect:non-scaling-stroke;cursor:pointer}
+#mapa .limite{fill:none;stroke:#2c3438;stroke-width:1.4;vector-effect:non-scaling-stroke;pointer-events:none;stroke-linejoin:round}
+#mapa .sobre{fill:none;vector-effect:non-scaling-stroke;pointer-events:none;stroke-linejoin:round}
+#mapaPaso{stroke:#111;stroke-width:1.6}
+#mapaSel{stroke:#111;stroke-width:2.6}
+#mapaRotulos{position:absolute;left:0;top:0;right:0;bottom:0;pointer-events:none}
+.capital{position:absolute;width:0;height:0}
+.capital .punto{position:absolute;left:-4.5px;top:-4.5px;width:9px;height:9px;border-radius:50%;background:#fff;border:1.5px solid #111}
+.capital .nombre{position:absolute;top:-10px;font-size:.8rem;font-weight:700;color:#111;white-space:nowrap;
+  text-shadow:0 0 2px #fff,0 0 3px #fff,1px 1px 0 #fff,-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff}
+.capital.este .nombre{left:9px}
+.capital.oeste .nombre{right:9px}
+
+#tip{position:fixed;pointer-events:none;background:#16262b;color:#fff;border-radius:8px;padding:8px 10px;font-size:.83rem;line-height:1.35;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:0;transition:opacity .08s;z-index:50;max-width:290px}
+#tip b.t1{display:block;font-size:.9rem}
+#tip .t2{display:block;color:#c9d6da;margin-bottom:4px}
+#tip dl{display:grid;grid-template-columns:auto auto;gap:1px 12px;margin:0}
+#tip dt{color:#c9d6da}
+#tip dd{margin:0;text-align:right;font-weight:650;font-variant-numeric:tabular-nums}
+
+.leyenda{margin-top:12px}
+.leyenda .tit{font-size:.82rem;color:var(--texto);font-weight:650;margin-bottom:5px}
+.leyenda .clases{display:flex;height:14px;border:1px solid #8a969b;border-radius:3px;overflow:hidden}
+.leyenda .clases i{flex:1 1 0;display:block;min-width:0}
+.leyenda .cortes{position:relative;height:18px;margin-top:3px;font-size:.76rem;color:var(--suave);font-variant-numeric:tabular-nums}
+.leyenda .cortes span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+.leyenda .cortes span.ini{transform:none}
+.leyenda .cortes span.fin{transform:translateX(-100%)}
+.leyenda .extra{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.78rem;color:var(--suave);margin-top:4px}
+.leyenda .extra i{display:inline-block;width:14px;height:10px;border:1px solid #8a969b;vertical-align:-1px;margin-right:5px}
+.leyenda .extra i.rayado{background:repeating-linear-gradient(45deg,#eeeeec 0 3px,#9aa3a6 3px 5px)}
+
+.fichas{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:8px 0 4px}
+.ficha{border:1px solid var(--borde);border-radius:8px;padding:8px 10px;background:#fbfaf7}
+.ficha .v{font-size:1.15rem;font-weight:650;color:var(--acento-2);line-height:1.25}
+.ficha .e{font-size:.76rem;color:var(--suave)}
+.sub{color:var(--suave);font-size:.88rem;font-weight:400}
+.etiqueta{display:inline-block;border-radius:999px;padding:1px 9px;font-size:.76rem;margin-left:8px;vertical-align:middle;font-weight:650}
+.etiqueta.final{background:#e6f2ee;color:#0b4a3a;border:1px solid #9fcdbb}
+.etiqueta.no{background:#f6eee6;color:#6e3a12;border:1px dashed #b98a5e}
+.etiqueta.contraste{background:#eef0f4;color:#33405a;border:1px solid #c3c9d6}
+
+/* Tablas */
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:6px 9px;text-align:right;border-bottom:1px solid var(--linea);white-space:nowrap}
+th.l,td.l{text-align:left}
+thead th{position:sticky;top:0;z-index:2;background:#f1efe8;font-size:.8rem;color:var(--suave);font-weight:650}
+thead th button{appearance:none;border:0;background:transparent;font:inherit;color:inherit;font-weight:inherit;cursor:pointer;padding:0;text-align:inherit}
+thead th button .flecha{display:inline-block;width:.9em;margin-left:3px;font-size:.7rem}
+tbody th{font-weight:400}
+tbody tr:hover{background:#f6f4ec}
+tbody tr.sel{background:var(--res)}
+tbody tr.final th,tbody tr.final td{font-weight:650}
+tbody tr.no th,tbody tr.no td{color:var(--no);font-style:italic}
+tbody tr.grupo th{background:#faf9f5;color:var(--acento-2);font-weight:700;font-size:.82rem;text-align:left}
+tbody tr.grupo:hover{background:transparent}
+button.enlace{appearance:none;border:0;background:transparent;font:inherit;color:inherit;font-style:inherit;font-weight:inherit;
+  cursor:pointer;padding:0;text-align:left;text-decoration:underline;text-decoration-color:#b9c4c8;text-underline-offset:3px}
+button.enlace:hover{text-decoration-color:var(--acento)}
+/* position:relative contiene los textos ocultos (.sr-only) de las celdas: sin él ensanchan la página. */
+.tabla-scroll{position:relative;max-height:520px;overflow:auto;border:1px solid var(--borde);border-radius:8px}
+.tabla-scroll.libre{max-height:none}
+.acciones{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+button.btn{font:inherit;padding:7px 12px;border-radius:8px;border:1px solid var(--acento);background:#fff;color:var(--acento-2);cursor:pointer}
+button.btn:hover{background:var(--res)}
+/* En pantallas angostas la primera columna queda fija al desplazar la tabla. */
+@media(max-width:700px){
+  table.fija thead th:first-child{left:0;z-index:3}
+  table.fija tbody th[scope=row]{position:sticky;left:0;z-index:1;background:#fff;box-shadow:1px 0 0 var(--linea);white-space:normal;min-width:118px;max-width:150px}
+  table.fija tbody tr.sel th[scope=row]{background:var(--res)}
+}
+td.si{text-align:center;color:var(--acento-2);font-weight:700}
+th.c,td.c{text-align:center}
+th.act,td.act{background:var(--res)}
+
+dl.ficha-modelo{display:grid;grid-template-columns:max-content 1fr;gap:5px 16px;margin:6px 0}
+dl.ficha-modelo dt{color:var(--suave)}
+dl.ficha-modelo dd{margin:0}
+@media(max-width:640px){dl.ficha-modelo{grid-template-columns:1fr;gap:0}dl.ficha-modelo dd{margin-bottom:6px}}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.dos{grid-template-columns:1fr}}
+.nota{font-size:.84rem;color:var(--suave);margin-top:8px}
+.nota b{color:var(--texto)}
+dl.glosario{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:8px 0 0;font-size:.84rem;color:var(--suave)}
+dl.glosario dt{color:var(--texto);font-weight:650}
+dl.glosario dd{margin:0}
+@media(max-width:640px){dl.glosario{grid-template-columns:1fr;gap:0}dl.glosario dd{margin-bottom:6px}}
+.prueba{margin-top:24px}
+.prueba:first-of-type{margin-top:6px}
+.prueba p{margin:4px 0 8px;font-size:.9rem}
+.vacio{color:var(--suave);padding:18px;text-align:center}
+
+/* Gráfico de intervalos entre modelos (es una tabla) */
+table.bosque th.g,table.bosque td.g{min-width:250px;width:36%;padding:0 26px}
+table.bosque td{padding-top:0;padding-bottom:0;height:28px}
+table.bosque tbody th{padding-top:3px;padding-bottom:3px}
+.eje{position:relative;height:18px;font-weight:400}
+.eje span{position:absolute;top:1px;transform:translateX(-50%)}
+.eje span.estrella{color:var(--ref);font-weight:700}
+.pista{position:relative;height:28px}
+.pista i{position:absolute;display:block}
+.pista .rej{top:0;bottom:0;width:1px;background:var(--linea)}
+.pista .refe{top:0;bottom:0;width:0;border-left:1.5px solid var(--ref)}
+.pista .ic{top:50%;height:3px;margin-top:-1.5px;background:#6b8d96;border-radius:2px;min-width:1px}
+.pt{width:11px;height:11px;background:var(--acento-2);border:2px solid #fff;border-radius:50%;box-sizing:content-box}
+.pista .pt{top:50%;margin:-7.5px 0 0 -7.5px}
+.pt.romb{border-radius:1px;transform:rotate(45deg);width:9px;height:9px}
+.pista .pt.romb{margin:-6.5px 0 0 -6.5px}
+.pt.cuad{border-radius:1px;width:9px;height:9px}
+.pista .pt.cuad{margin:-6.5px 0 0 -6.5px}
+tr.sel .pista .ic{background:var(--acento-2);height:4px;margin-top:-2px}
+tr.sel .pt{border-color:var(--res)}
+.claves{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.84rem;color:var(--suave);margin:6px 0 10px}
+.claves span{display:inline-flex;align-items:center;gap:7px}
+.claves .pt{display:inline-block;border-color:var(--panel)}
+.claves .lin{display:inline-block;width:0;height:14px;border-left:1.5px solid var(--ref)}
+.claves .bar{display:inline-block;width:22px;height:3px;background:#6b8d96;border-radius:2px}
+
+/* Navegador de los nueve Fay-Herriot */
+#navFH{overflow-x:auto}
+table.nav-fh{width:auto;margin:4px 0 12px}
+table.nav-fh th,table.nav-fh td{border:0;padding:3px 6px;text-align:center}
+table.nav-fh thead th{position:static;background:transparent}
+table.nav-fh tbody th{text-align:left;color:var(--suave);font-weight:650}
+table.nav-fh tbody tr:hover{background:transparent}
+table.nav-fh button{font:inherit;min-width:104px;padding:6px 10px;border-radius:8px;border:1px solid var(--borde);background:#fff;color:var(--texto);cursor:pointer}
+table.nav-fh button[aria-pressed="true"]{background:var(--acento);border-color:var(--acento);color:#fff}
+table.nav-fh button.no{font-style:italic;color:var(--no)}
+table.nav-fh button.no[aria-pressed="true"]{color:#fff}
+@media(max-width:520px){table.nav-fh th,table.nav-fh td{padding:3px}table.nav-fh button{min-width:0;padding:6px 8px;font-size:.86rem}}
+.titulo-modelo{margin:4px 0 8px;font-weight:650}
+
+.qq{margin:0}
+.qq figcaption{font-weight:650;font-size:.92rem;text-align:center;margin-bottom:2px}
+.qq svg{width:100%;height:auto;display:block;max-width:460px;margin:0 auto}
+svg text{font-family:inherit}
+details{margin-top:10px}
+summary{cursor:pointer;color:var(--acento-2);font-size:.88rem}
+
+#errorCarga{max-width:760px;margin:28px auto;padding:18px 20px;border:1px solid #d9a88a;background:#fdf3ec;border-radius:var(--radio);color:#5a2a10}
+#errorCarga h2{margin:0 0 6px;font-size:1.05rem}
+#errorCarga p{margin:0}
+body.con-error nav.tabs,body.con-error .global,body.con-error main,body.con-error footer{display:none}
+#avisoError{position:fixed;left:12px;bottom:12px;z-index:60;max-width:420px;padding:10px 12px;border:1px solid #d9a88a;background:#fdf3ec;border-radius:8px;color:#5a2a10;font-size:.84rem;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+
+footer{border-top:1px solid var(--borde);padding:14px 0 30px;color:var(--suave);font-size:.84rem}
+footer p{margin:4px 0}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media print{
+  nav.tabs,.global,.controles,.acciones,#tip,a.salto,button.btn,#avisoError,details{display:none!important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}
+  header{background:#fff;color:#000;padding:0 0 8px}
+  header p,header p.creditos{color:#000}
+  .aviso{border-color:#000;color:#000;background:#fff}
+  .panel{border:0;padding:0}
+  .tabla-scroll{max-height:none;overflow:visible;border:0}
+  thead th{position:static}
+  main{padding-top:0}
+}
+</style>
+</head>
+<body>
+
+<a class="salto" href="#contenido">Saltar al contenido</a>
+
+<header>
+  <div class="contenedor">
+    <h1>Pobreza Monetaria Municipal en el Valle del Cauca y Cauca Mediante Estimación de Áreas Pequeñas</h1>
+    <p>Tablero de resultados del trabajo de grado para optar al título de Magíster en Ciencia de Datos. Pontificia Universidad Javeriana Cali.</p>
+    <p class="creditos">Jeyffer Caicedo Guerrero y Brayan Mosquera Venachi. Directora: Sandra Milena Ramírez Buelvas.</p>
+    <p id="resumenTablero"></p>
+    <span class="aviso">Ejercicio académico. Las estimaciones no son cifras oficiales.</span>
+  </div>
+</header>
+
+<noscript>
+  <div style="max-width:760px;margin:28px auto;padding:18px 20px;border:1px solid #d9a88a;background:#fdf3ec;border-radius:10px;color:#5a2a10">
+    Este tablero necesita JavaScript. Actívelo en el navegador y vuelva a abrir el archivo.
+  </div>
+</noscript>
+
+<div id="errorCarga" role="alert" hidden><h2></h2><p></p></div>
+
+<nav class="tabs" aria-label="Secciones del tablero">
+  <div class="contenedor" role="tablist">
+    <button role="tab" id="tab-mapa"      aria-controls="v-mapa"      aria-selected="true"  data-vista="mapa">Mapa y tabla</button>
+    <button role="tab" id="tab-modelo"    aria-controls="v-modelo"    aria-selected="false" data-vista="modelo" tabindex="-1">Modelo</button>
+    <button role="tab" id="tab-municipio" aria-controls="v-municipio" aria-selected="false" data-vista="municipio" tabindex="-1">Municipio</button>
+    <button role="tab" id="tab-diag"      aria-controls="v-diag"      aria-selected="false" data-vista="diag" tabindex="-1">Supuestos</button>
+    <button role="tab" id="tab-pruebas"   aria-controls="v-pruebas"   aria-selected="false" data-vista="pruebas" tabindex="-1">Concordancia</button>
+  </div>
+</nav>
+
+<div class="global">
+  <div class="contenedor">
+    <div class="campo"><label for="selModelo">Modelo</label><select id="selModelo"></select></div>
+    <div class="campo"><label for="selMun">Municipio</label><select id="selMun"></select></div>
+  </div>
+</div>
+
+<main id="contenido">
+<div class="contenedor">
+
+<p class="leyenda-modelos" id="leyendaModelos"></p>
+
+<!-- ========================= MAPA Y TABLA ========================= -->
+<section class="vista activa" id="v-mapa" role="tabpanel" aria-labelledby="tab-mapa">
+  <div class="controles">
+    <div class="campo"><span class="etq" id="etqVar">Mostrar en el mapa</span>
+      <div class="segmentos" id="segVar" role="group" aria-labelledby="etqVar">
+        <button type="button" data-var="estimacion" aria-pressed="true">Estimación</button>
+        <button type="button" data-var="cv_pct" aria-pressed="false">CV</button>
+        <button type="button" data-var="amplitud" aria-pressed="false">Amplitud del IC</button>
+        <button type="button" data-var="dif" aria-pressed="false">Diferencia con otro modelo</button>
+        <button type="button" data-var="rango" aria-pressed="false">Rango entre modelos</button>
+      </div></div>
+    <div class="campo" id="campoComparar" hidden><label for="selComparar">Comparar con</label><select id="selComparar"></select></div>
+    <div class="campo"><label for="selDepto">Departamento</label>
+      <select id="selDepto"><option>Todos</option></select></div>
+    <label class="chk" id="chkComunEtq"><input type="checkbox" id="chkComun" checked> Escala de color fija entre modelos</label>
+  </div>
+  <div class="nota-caja" id="avisoDepto" role="note" hidden>
+    El filtro solo resalta los municipios del departamento elegido. Las estimaciones no cambian: provienen del mismo modelo, ajustado con los municipios de ambos departamentos.
+  </div>
+
+  <div class="cuadricula">
+    <div class="panel">
+      <div id="mapaLienzo">
+        <svg id="mapa" role="img" aria-label="Mapa de los municipios"></svg>
+        <div id="mapaRotulos" aria-hidden="true"></div>
+      </div>
+      <div class="leyenda" id="leyenda"></div>
+      <div class="nota" id="notaEscala"></div>
+    </div>
+    <div class="columna">
+      <div class="panel" id="resumenModelo"></div>
+      <div class="panel" id="cartaMun"></div>
+      <div class="panel">
+        <h2>Municipios <span class="sub" id="cuenta"></span></h2>
+        <div class="acciones">
+          <label class="sr-only" for="buscar">Buscar municipio</label>
+          <input type="search" id="buscar" placeholder="Buscar municipio" style="min-width:200px">
+          <span class="sub">El nombre selecciona el municipio. Los encabezados ordenan la tabla.</span>
+        </div>
+        <div class="tabla-scroll"><table id="tabla" class="fija"></table></div>
+        <div class="nota" id="notaTabla"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= MODELO ========================= -->
+<section class="vista" id="v-modelo" role="tabpanel" aria-labelledby="tab-modelo">
+  <div class="panel" id="fichaModelo"></div>
+  <div class="panel">
+    <h2>Comparación de los modelos</h2>
+    <div class="controles" style="margin-bottom:6px">
+      <div class="campo"><span class="etq" id="etqOrden">Agrupar por</span>
+        <div class="segmentos" id="segOrden" role="group" aria-labelledby="etqOrden">
+          <button type="button" data-orden="familia" aria-pressed="true">Familia</button>
+          <button type="button" data-orden="mse" aria-pressed="false">Estimador del MSE</button>
+        </div></div>
+    </div>
+    <div class="tabla-scroll libre"><table id="tablaModelos" class="fija"></table></div>
+    <dl class="glosario" id="glosarioModelos"></dl>
+  </div>
+</section>
+
+<!-- ========================= MUNICIPIO ========================= -->
+<section class="vista" id="v-municipio" role="tabpanel" aria-labelledby="tab-municipio">
+  <div class="panel">
+    <h2 id="tituloMun">Estimación en los modelos</h2>
+    <div class="fichas" id="fichasMun"></div>
+    <p class="sub" style="margin:8px 0 0">Punto: estimación. Barra: intervalo de confianza al 95 %. La forma del punto indica el estimador del MSE del que salen el intervalo y el CV: los obtenidos con estimadores distintos no son directamente comparables. El nombre selecciona el modelo.</p>
+    <div class="claves" id="clavesBosque"></div>
+    <div class="tabla-scroll libre"><table class="bosque fija" id="bosque"></table></div>
+  </div>
+  <div class="panel">
+    <h2>Municipios más sensibles a la especificación</h2>
+    <p class="sub" style="margin-top:0" id="subSensibles"></p>
+    <div class="tabla-scroll libre"><table id="sensibles"></table></div>
+    <div class="acciones" style="margin:10px 0 0"><button type="button" class="btn" id="btnSensibles"></button></div>
+  </div>
+</section>
+
+<!-- ========================= SUPUESTOS ========================= -->
+<section class="vista" id="v-diag" role="tabpanel" aria-labelledby="tab-diag">
+  <div class="panel">
+    <h2>Compatibilidad con normalidad</h2>
+    <p class="sub" style="margin-top:0">Este diagnóstico se presenta para los nueve modelos Fay-Herriot. Elija la especificación y la escala.</p>
+    <div id="navFH"></div>
+    <div id="diagCuerpo"></div>
+    <p class="nota"><b>Lectura.</b> Los gráficos y estadísticos se calculan sobre cantidades predichas por el modelo (residuos estandarizados y efectos aleatorios predichos), no sobre los errores y efectos latentes, que no se observan. Son evidencia descriptiva de compatibilidad con el supuesto, no una demostración de normalidad.</p>
+    <p class="nota"><b>Modelos incluidos.</b> Esta pestaña solo muestra los modelos Fay-Herriot, en sus tres escalas y sus tres especificaciones. En los modelos espaciales los efectos de área están correlacionados entre municipios, por lo que estas pruebas no se trasladan directamente. En los robustos, el método reduce el peso de los municipios de las colas, que son justamente los que determinan la asimetría y la curtosis.</p>
+  </div>
+</section>
+
+<!-- ========================= CONCORDANCIA ========================= -->
+<section class="vista" id="v-pruebas" role="tabpanel" aria-labelledby="tab-pruebas">
+  <div class="panel">
+    <h2>Concordancia con la referencia municipal DANE</h2>
+    <p class="sub" style="margin-top:0">Estas pruebas comparan las estimaciones de cada modelo con la referencia municipal DANE. El tablero muestra solo el resultado de cada prueba, no la serie de la referencia. Como la estimación de cada municipio ya incorpora esa referencia, la comparación no es una validación independiente. Solo aparecen los modelos incluidos en la evaluación de concordancia y precisión de la Etapa III. La precisión (CV) de todos los modelos se resume en la pestaña <b>Modelo</b>.</p>
+    <div id="pruebasCuerpo"></div>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer>
+  <div class="contenedor" id="pie"></div>
+</footer>
+
+<div id="tip" role="tooltip"></div>
+<div id="avisoError" role="status" hidden></div>
+<div class="sr-only" aria-live="polite" id="anuncio"></div>
+
+<script type="application/json" id="datos-json">__DATOS_JSON__</script>
+<script type="application/json" id="geo-json">__GEO_JSON__</script>
+
+<script>
+"use strict";
+(function(){
+
+/* ===================================================================== *
+ *  Carga de los datos. Los inserta 09_dashboard_construir.R en las dos   *
+ *  etiquetas de tipo application/json que están justo encima.            *
+ * ===================================================================== */
+function mostrarError(titulo, detalle){
+  var c = document.getElementById("errorCarga");
+  c.querySelector("h2").textContent = titulo;
+  c.querySelector("p").textContent = detalle;
+  c.hidden = false;
+  document.body.classList.add("con-error");
+}
+function leerJson(id){
+  var el = document.getElementById(id);
+  var t = el ? el.textContent.trim() : "";
+  if(!t || t.slice(0,2) === "__") throw new Error("plantilla");
+  return JSON.parse(t);
+}
+var DATOS, GEO;
+try{
+  DATOS = leerJson("datos-json");
+  GEO   = leerJson("geo-json");
+}catch(e){
+  if(e.message === "plantilla"){
+    mostrarError("Este archivo es la plantilla del tablero",
+      "No contiene datos. Ejecute 08_exportar_datos_dashboard.R y 09_dashboard_construir.R, y abra output/dashboard_pobreza.html.");
+  }else{
+    mostrarError("No se pudieron leer los datos del tablero",
+      "El archivo está incompleto o dañado. Vuelva a generarlo con 09_dashboard_construir.R. Detalle: " + e.message);
+  }
+  return;
+}
+
+/* ===================================================================== *
+ *  Utilidades                                                            *
+ * ===================================================================== */
+const $  = (s, r) => (r||document).querySelector(s);
+const $$ = (s, r) => Array.from((r||document).querySelectorAll(s));
+const lista = x => (x===null||x===undefined) ? [] : (Array.isArray(x) ? x : [x]);
+/* Las tablas llegan por columnas ({columna:[valores]}), que ocupa menos; aquí se pasan a filas. */
+function tabla(x){
+  if(x === null || x === undefined) return [];
+  if(Array.isArray(x)) return x;
+  const ks = Object.keys(x);
+  if(!ks.length) return [];
+  const n = lista(x[ks[0]]).length, out = new Array(n);
+  for(let i = 0; i < n; i++){
+    const o = {};
+    for(let j = 0; j < ks.length; j++){ const c = x[ks[j]]; o[ks[j]] = Array.isArray(c) ? c[i] : c; }
+    out[i] = o;
+  }
+  return out;
+}
+const cmp = (a,b) => String(a).localeCompare(String(b), "es");
+const SUP = {"0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹","-":"⁻"};
+const ESC = {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"};
+
+function esc(t){ return String(t===null||t===undefined ? "" : t).replace(/[&<>"']/g, c => ESC[c]); }
+function num(x){ return (typeof x === "number" && isFinite(x)) ? x : null; }
+/* Número con coma decimal y signo menos tipográfico. */
+function fmt(x, d){
+  if(num(x)===null) return "–";
+  if(d===undefined) d = 1;
+  const s = Math.abs(x).toFixed(d);
+  return ((x < 0 && Number(s) !== 0) ? "−" : "") + s.replace(".", ",");
+}
+function fmtSigno(x, d){ return num(x)===null ? "–" : ((x > 0 && Number(Math.abs(x).toFixed(d===undefined?1:d)) !== 0) ? "+" : "") + fmt(x, d); }
+function fmtPct(x, d){ return num(x)===null ? "–" : fmt(x*100, d) + " %"; }
+function fmtCv(x, d){ return num(x)===null ? "–" : fmt(x, d) + " %"; }
+function fmtSig(x, s){
+  if(num(x)===null) return "–";
+  if(x===0) return "0";
+  s = s || 4;
+  const a = Math.abs(x);
+  if(a < 0.001 || a >= 1e6){
+    let e = Math.floor(Math.log10(a)), m = x / Math.pow(10, e);
+    if(Math.abs(m) >= 9.995){ m /= 10; e += 1; }
+    return fmt(m, 2) + " × 10" + String(e).split("").map(c => SUP[c]||c).join("");
+  }
+  return fmt(x, Math.min(Math.max(0, s - 1 - Math.floor(Math.log10(a))), 8));
+}
+function fmtP(x){ return num(x)===null ? "–" : (x < 0.001 ? "< 0,001" : fmt(x, 3)); }
+const COMBINANTES = new RegExp("[" + String.fromCharCode(0x300) + "-" + String.fromCharCode(0x36f) + "]", "g");
+function quitaTildes(s){ return String(s).normalize("NFD").replace(COMBINANTES, "").toLowerCase(); }
+const MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+function fechaLarga(t){
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(t||""));
+  return m ? Number(m[3]) + " de " + MESES[Number(m[2])-1] + " de " + m[1] : String(t||"");
+}
+
+/* ===================================================================== *
+ *  Índices                                                               *
+ * ===================================================================== */
+const MODELOS = tabla(DATOS.modelos).sort((a,b) => (a.orden||0) - (b.orden||0));
+const MUNICIPIOS = tabla(DATOS.municipios);
+const ESTIMACIONES = tabla(DATOS.estimaciones);
+if(!MODELOS.length || !MUNICIPIOS.length || !ESTIMACIONES.length){
+  mostrarError("El archivo no trae modelos ni estimaciones",
+    "Revise la salida de 08_exportar_datos_dashboard.R y vuelva a ejecutar 09_dashboard_construir.R.");
+  return;
+}
+const META = DATOS.meta || {};
+const MOD = {}; MODELOS.forEach(m => { MOD[m.modelo] = m; });
+const MUN = {}; MUNICIPIOS.forEach(m => { MUN[m.cod_mun] = m; });
+const MUN_ORDEN = MUNICIPIOS.slice().sort((a,b) => cmp(a.municipio, b.municipio));
+const DEPTOS = []; MUNICIPIOS.forEach(m => { if(DEPTOS.indexOf(m.departamento) < 0) DEPTOS.push(m.departamento); }); DEPTOS.sort(cmp);
+const N_MOD = MODELOS.length, N_MUN = MUNICIPIOS.length;
+const FINAL = MODELOS.find(m => m.es_final === true) || null;
+const HAY_ESTADO = MODELOS.some(m => m.etapa3);
+const HAY_NO_EVAL = MODELOS.some(m => m.etapa3 === "no_evaluado");
+
+const EST = new Map();
+ESTIMACIONES.forEach(r => { if(MOD[r.modelo] && MUN[r.cod_mun]) EST.set(r.modelo + "|" + r.cod_mun, r); });
+const COEF = {};  tabla(DATOS.coeficientes).forEach(r => { (COEF[r.modelo] = COEF[r.modelo] || []).push(r); });
+const ESPEC = {}; tabla(DATOS.especificaciones).forEach(r => { (ESPEC[r.especificacion] = ESPEC[r.especificacion] || []).push(r); });
+Object.keys(ESPEC).forEach(k => ESPEC[k].sort((x,y) => x.orden - y.orden));
+const QQ = {};    tabla(DATOS.qq).forEach(r => { (QQ[r.modelo] = QQ[r.modelo] || []).push(r); });
+const NORMAL = {}; tabla(DATOS.normalidad).forEach(r => { NORMAL[r.modelo] = r; });
+const PRUEBAS = (DATOS.pruebas && !Array.isArray(DATOS.pruebas)) ? DATOS.pruebas : {};
+
+const NOMBRE_ESCALA  = {original:"escala original", log:"escala logarítmica", logit:"escala logit"};
+const ESCALA_CORTA   = {original:"original", log:"log", logit:"logit"};
+const NOMBRE_METODO  = {reml:"REML", reblup:"REBLUP", reblupbc:"REBLUPbc"};
+const NOMBRE_FAMILIA = {FH:"Fay-Herriot", SFH:"Fay-Herriot espacial", RFH:"Fay-Herriot robusto"};
+const ESTADO = {
+  final:       {txt:"Especificación final seleccionada",                         corto:"especificación final",          tabla:"Especificación final", clase:"final"},
+  evaluado:    {txt:"Incluido en la evaluación de concordancia y precisión",     corto:"evaluado",                      tabla:"Incluido",             clase:""},
+  contraste:   {txt:"Incluido en la evaluación solo como contraste",             corto:"solo como contraste",           tabla:"Solo como contraste",  clase:"contraste"},
+  no_evaluado: {txt:"No incluido en la evaluación de concordancia y precisión",  corto:"no incluido en la evaluación",  tabla:"No incluido",          clase:"no"}
+};
+const K_ROB = num(META.k_robusto);
+
+function etiqueta(v){ return v === "(Intercept)" ? "Intercepto" : ((DATOS.etiquetas && DATOS.etiquetas[v]) || v); }
+function marca(m){ return (m.es_final ? " ★" : "") + (m.etapa3 === "no_evaluado" ? " †" : ""); }
+function marcaHtml(m){
+  return (m.es_final ? '<span aria-hidden="true"> ★</span><span class="sr-only"> (especificación final)</span>' : '') +
+         (m.etapa3 === "no_evaluado" ? '<span aria-hidden="true"> †</span><span class="sr-only"> (no incluido en la evaluación)</span>' : '');
+}
+/* Nombre corto dentro de su familia y sigla para encabezados. */
+function nombreFila(m){
+  if(m.familia === "FH")  return m.especificacion + ", " + (NOMBRE_ESCALA[m.escala] || m.escala);
+  if(m.familia === "RFH") return m.especificacion + ", " + (NOMBRE_METODO[m.metodo] || m.metodo);
+  return m.especificacion;
+}
+function sigla(m){
+  if(!m) return "";
+  if(m.familia === "FH")  return "FH " + m.especificacion + " " + (ESCALA_CORTA[m.escala] || m.escala);
+  if(m.familia === "RFH") return "RFH " + m.especificacion + " " + (NOMBRE_METODO[m.metodo] || m.metodo);
+  return m.familia + " " + m.especificacion;
+}
+function etiquetaEstado(m){
+  const e = ESTADO[m.etapa3]; if(!e || m.etapa3 === "evaluado") return "";
+  return '<span class="etiqueta ' + e.clase + '">' + esc(e.corto) + '</span>';
+}
+function claseFila(m){ return (m.es_final ? "final " : "") + (m.etapa3 === "no_evaluado" ? "no " : ""); }
+
+/* Estimador del MSE: nombre corto (tablas y gráficos) y largo (ficha), a      *
+ * partir de lo que registra cada ajuste de emdi en method$MSE_method.         */
+function mseInfo(m){
+  const t = m.mse_tipo;
+  if(t === null || t === undefined || t === "") return {corto:"no registrado", largo:"No registrado en el ajuste", forma:"cuad"};
+  const s = String(t).toLowerCase();
+  const B = num(m.mse_b) !== null ? " (B = " + fmt(m.mse_b, 0) + " réplicas)" : "";
+  if(/boot/.test(s)){
+    const np = /non-?param|no param/.test(s);
+    return {corto:"bootstrap", largo:(np ? "Bootstrap no paramétrico" : "Bootstrap paramétrico") + B, forma:"romb"};
+  }
+  if(/pseudo/.test(s)) return {corto:"pseudolinealización", largo:"Pseudolinealización", forma:"cuad"};
+  if(/jack/.test(s))   return {corto:"jackknife", largo:/weight|ponder/.test(s) ? "Jackknife ponderado" : "Jackknife", forma:"cuad"};
+  let largo = null;
+  if(/singh/.test(s) || (m.familia === "SFH" && /prasad|anal/.test(s))) largo = "Analítico, aproximación para el modelo espacial";
+  else if(/prasad/.test(s))    largo = "Analítico (Prasad-Rao)";
+  else if(/datta/.test(s))     largo = "Analítico (Datta-Lahiri)";
+  else if(/yoshimori/.test(s)) largo = "Analítico (Yoshimori-Lahiri)";
+  else if(/li-lahiri/.test(s)) largo = "Analítico (Li-Lahiri)";
+  else if(/slud/.test(s))      largo = "Analítico (Slud-Maiti)";
+  else if(/anal/.test(s))      largo = "Analítico";
+  if(largo){
+    if(m.familia === "FH" && m.escala === "log") largo += ", calculado en escala logarítmica y retransformado a la escala original";
+    return {corto:"analítico", largo:largo, forma:"circ"};
+  }
+  return {corto:String(t), largo:String(t), forma:"cuad"};
+}
+MODELOS.forEach(m => { m._mse = mseInfo(m); });
+
+/* Sensibilidad de cada municipio a la especificación: recorrido de la          *
+ * estimación entre todos los modelos.                                         */
+const SENS = {};
+MUNICIPIOS.forEach(mu => {
+  let lo = Infinity, hi = -Infinity, a = null, b = null;
+  MODELOS.forEach(md => {
+    const r = EST.get(md.modelo + "|" + mu.cod_mun), x = r ? num(r.estimacion) : null;
+    if(x === null) return;
+    if(x < lo){ lo = x; a = md.modelo; }
+    if(x > hi){ hi = x; b = md.modelo; }
+  });
+  SENS[mu.cod_mun] = a ? {min:lo, max:hi, rango:hi-lo, modMin:a, modMax:b} : null;
+});
+const SENS_ORDEN = MUNICIPIOS.filter(m => SENS[m.cod_mun]).sort((x,y) => SENS[y.cod_mun].rango - SENS[x.cod_mun].rango);
+
+/* Diferencia de cada modelo con la especificación final: media y máximo del    *
+ * valor absoluto, en puntos porcentuales.                                     */
+const CONTRA_FINAL = {};
+if(FINAL){
+  MODELOS.forEach(md => {
+    let s = 0, n = 0, mx = 0;
+    MUNICIPIOS.forEach(mu => {
+      const a = EST.get(md.modelo + "|" + mu.cod_mun), b = EST.get(FINAL.modelo + "|" + mu.cod_mun);
+      if(!a || !b || num(a.estimacion) === null || num(b.estimacion) === null) return;
+      const d = Math.abs(a.estimacion - b.estimacion) * 100; s += d; n++; if(d > mx) mx = d;
+    });
+    CONTRA_FINAL[md.modelo] = n ? {media:s/n, max:mx} : null;
+  });
+}
+
+/* ===================================================================== *
+ *  Estado                                                                *
+ * ===================================================================== */
+const VISTAS = ["mapa","modelo","municipio","diag","pruebas"];
+const VARIABLES = {
+  estimacion: {nombre:"Pobreza monetaria estimada", unidad:"%",  rampa:"azul"},
+  cv_pct:     {nombre:"Coeficiente de variación de la estimación", unidad:"%", rampa:"naranja"},
+  amplitud:   {nombre:"Amplitud del intervalo de confianza al 95 %", unidad:"pp", rampa:"morado"},
+  dif:        {nombre:"Diferencia de la estimación", unidad:"pp", rampa:null},
+  rango:      {nombre:"Rango de la estimación entre los " + N_MOD + " modelos", unidad:"pp", rampa:"verde"}
+};
+const E = {
+  modelo: FINAL ? FINAL.modelo : MODELOS[0].modelo,
+  comparar: FINAL ? FINAL.modelo : MODELOS[0].modelo,
+  variable: "estimacion",
+  depto: "Todos",
+  comun: true,
+  mun: null,
+  busqueda: "",
+  orden: {col:"estimacion", dir:-1},
+  ordenModelos: "familia",
+  todosSensibles: false,
+  vista: "mapa"
+};
+
+function leerEstado(){
+  let p;
+  try{ p = new URLSearchParams(String(location.hash || "").replace(/^#/, "")); }catch(e){ return; }
+  if(VISTAS.indexOf(p.get("vista")) >= 0) E.vista = p.get("vista");
+  if(MOD[p.get("modelo")]) E.modelo = p.get("modelo");
+  if(MOD[p.get("comparar")]) E.comparar = p.get("comparar");
+  if(MUN[p.get("mun")]) E.mun = p.get("mun");
+  if(VARIABLES[p.get("var")]) E.variable = p.get("var");
+  if(DEPTOS.indexOf(p.get("depto")) >= 0) E.depto = p.get("depto");
+  if(p.get("escala") === "propia") E.comun = false;
+}
+function guardarEstado(){
+  try{
+    const p = new URLSearchParams();
+    p.set("vista", E.vista); p.set("modelo", E.modelo);
+    if(E.mun) p.set("mun", E.mun);
+    if(E.variable !== "estimacion") p.set("var", E.variable);
+    if(E.variable === "dif") p.set("comparar", E.comparar);
+    if(E.depto !== "Todos") p.set("depto", E.depto);
+    if(!E.comun) p.set("escala", "propia");
+    history.replaceState(null, "", "#" + p.toString());
+  }catch(e){ /* en algunos navegadores no se puede con archivos locales */ }
+}
+
+/* ===================================================================== *
+ *  Valores y escalas del mapa                                            *
+ * ===================================================================== */
+/* Valor de un municipio en las unidades en que se muestra (% o pp). */
+function valor(cod, v, modelo){
+  if(v === "rango"){ const s = SENS[cod]; return s ? s.rango * 100 : null; }
+  const r = EST.get((modelo || E.modelo) + "|" + cod);
+  if(!r) return null;
+  if(v === "estimacion") return num(r.estimacion) === null ? null : r.estimacion * 100;
+  if(v === "cv_pct")     return num(r.cv_pct);
+  if(v === "ic_inf")     return num(r.ic_inf) === null ? null : r.ic_inf * 100;
+  if(v === "ic_sup")     return num(r.ic_sup) === null ? null : r.ic_sup * 100;
+  if(v === "amplitud")   return (num(r.ic_sup) !== null && num(r.ic_inf) !== null) ? (r.ic_sup - r.ic_inf) * 100 : null;
+  if(v === "dif"){
+    const b = EST.get(E.comparar + "|" + cod);
+    return (b && num(b.estimacion) !== null && num(r.estimacion) !== null) ? (r.estimacion - b.estimacion) * 100 : null;
+  }
+  return null;
+}
+function rango(v, modelos){
+  let lo = Infinity, hi = -Infinity;
+  modelos.forEach(id => MUNICIPIOS.forEach(mu => {
+    const x = valor(mu.cod_mun, v, id);
+    if(x !== null){ if(x < lo) lo = x; if(x > hi) hi = x; }
+  }));
+  return (lo <= hi) ? [lo, hi] : null;
+}
+const TODOS = MODELOS.map(m => m.modelo);
+const RANGO_GLOBAL = {estimacion:rango("estimacion", TODOS), cv_pct:rango("cv_pct", TODOS),
+                      amplitud:rango("amplitud", TODOS), rango:rango("rango", [TODOS[0]])};
+
+/* Cortes redondos, con el mismo criterio de pretty() de R (el que usan los     *
+ * mapas del documento).                                                       */
+function bonitos(lo, hi, n){
+  if(!(hi > lo)){ const c = lo || 1; lo = lo - Math.abs(c) * 0.05; hi = hi + Math.abs(c) * 0.05; }
+  const h = 1.5, h5 = 0.5 + 1.5 * h;
+  const celda = (hi - lo) / Math.max(1, n);
+  const base = Math.pow(10, Math.floor(Math.log10(celda)));
+  let u = base;
+  if(2*base - celda < h * (celda - u)){ u = 2*base;
+    if(5*base - celda < h5 * (celda - u)){ u = 5*base;
+      if(10*base - celda < h * (celda - u)) u = 10*base; } }
+  let ns = Math.floor(lo / u + 1e-7), nu = Math.ceil(hi / u - 1e-7);
+  while(ns * u > lo + 1e-10 * u) ns--;
+  while(nu * u < hi - 1e-10 * u) nu++;
+  const dec = Math.max(0, -Math.floor(Math.log10(u) + 1e-9));
+  const out = [];
+  for(let i = ns; i <= nu; i++) out.push(Number((i * u).toFixed(dec)));
+  return out;
+}
+/* Hasta siete clases: si salen más, se unen las dos del extremo con menos      *
+ * recorrido de datos.                                                         */
+function cortesSecuenciales(lo, hi){
+  const br = bonitos(lo, hi, 6);
+  while(br.length - 1 > 7){
+    const n = br.length;
+    if((br[1] - lo) <= (hi - br[n-2])) br.splice(1, 1); else br.splice(n-2, 1);
+  }
+  return br;
+}
+function decimalesDe(cortes){
+  let d = 0;
+  cortes.forEach(c => { const t = String(c); const i = t.indexOf("."); if(i >= 0) d = Math.max(d, t.length - i - 1); });
+  return Math.min(d, 2);
+}
+
+/* Rampas secuenciales de un solo tono (ColorBrewer, sin los dos pasos más      *
+ * claros, como en los mapas del documento) y rampa divergente morado-naranja.  *
+ * Verificadas con simulación de protanopia, deuteranopia y tritanopia: la      *
+ * claridad crece de forma monótona en todas.                                  */
+const RAMPAS = {
+  azul:    ["#c6dbef","#9ecae1","#6baed6","#4292c6","#2171b5","#08519c","#08306b"],
+  naranja: ["#fdd0a2","#fdae6b","#fd8d3c","#f16913","#d94801","#a63603","#7f2704"],
+  morado:  ["#dadaeb","#bcbddc","#9e9ac8","#807dba","#6a51a3","#54278f","#3f007d"],
+  verde:   ["#c7e9c0","#a1d99b","#74c476","#41ab5d","#238b45","#006d2c","#00441b"]
+};
+const DIVERGENTE = ["#542788","#998ec3","#d8daeb","#f7f7f7","#fee0b6","#f1a340","#b35806"];
+function aRgb(h){ return [1,3,5].map(i => parseInt(h.slice(i, i+2), 16)); }
+function css(c){ return "rgb(" + c.map(Math.round).join(",") + ")"; }
+function coloresDe(nombre, k){
+  const st = RAMPAS[nombre].map(aRgb), n = st.length - 1;
+  if(k <= 1) return [st[Math.round(n/2)]];
+  const out = [];
+  for(let j = 0; j < k; j++){
+    const x = j / (k - 1) * n, i = Math.min(n - 1, Math.floor(x)), f = x - i;
+    out.push(st[i].map((c, q) => c + (st[i+1][q] - c) * f));
+  }
+  return out;
+}
+function palido(c){ return c.map(v => v + (255 - v) * 0.8); }
+
+function escalaActual(){
+  const v = E.variable;
+  if(v === "dif"){
+    const r = rango("dif", E.comun ? TODOS : [E.modelo]);
+    const mx = r ? Math.max(Math.abs(r[0]), Math.abs(r[1])) : 0;
+    /* Paso redondo (1, 2 o 5 por una potencia de 10) tal que las clases extremas tengan datos. */
+    let s = 0.1;
+    if(mx > 0.25){
+      const obj = mx / 2.5, b = Math.pow(10, Math.floor(Math.log10(obj))), f = obj / b;
+      s = Math.max(0.1, (f >= 5 ? 5 : f >= 2 ? 2 : 1) * b);
+    }
+    return {div:true, paso:s, cortes:[-2.5,-1.5,-0.5,0.5,1.5,2.5].map(q => Number((q * s).toFixed(4))), colores:DIVERGENTE.map(aRgb), max:mx};
+  }
+  const r = (v === "rango") ? RANGO_GLOBAL.rango : (E.comun ? RANGO_GLOBAL[v] : rango(v, [E.modelo]));
+  if(!r) return null;
+  const cortes = cortesSecuenciales(r[0], r[1]);
+  return {div:false, cortes:cortes, colores:coloresDe(VARIABLES[v].rampa, cortes.length - 1)};
+}
+function claseDe(es, x){
+  if(es.div){ let i = 0; while(i < es.cortes.length && x > es.cortes[i]) i++; return i; }
+  const n = es.cortes.length - 1; let i = 0;
+  while(i < n - 1 && x > es.cortes[i+1]) i++;
+  return i;
+}
+
+/* ===================================================================== *
+ *  Mapa                                                                  *
+ * ===================================================================== */
+const NS = "http://www.w3.org/2000/svg";
+const svgMapa = $("#mapa");
+const PATHS = {};
+let trazoPaso = null, trazoSel = null;
+function nuevo(t, at){ const e = document.createElementNS(NS, t); if(at) Object.keys(at).forEach(k => e.setAttribute(k, at[k])); return e; }
+
+function construirMapa(){
+  const feats = lista(GEO.municipios).filter(f => MUN[f.cod_mun] && Array.isArray(f.anillos));
+  if(!feats.length) return;
+  let minLon = Infinity, maxLon = -Infinity, minLat = Infinity, maxLat = -Infinity;
+  feats.forEach(f => f.anillos.forEach(r => r.forEach(p => {
+    if(p[0] < minLon) minLon = p[0]; if(p[0] > maxLon) maxLon = p[0];
+    if(p[1] < minLat) minLat = p[1]; if(p[1] > maxLat) maxLat = p[1]; })));
+  /* Proyección equirectangular: 1 grado de latitud = 1000 unidades. */
+  const k = Math.cos(((minLat + maxLat) / 2) * Math.PI / 180) * 1000;
+  const W = (maxLon - minLon) * k, H = (maxLat - minLat) * 1000, mg = 14;
+  const px = lon => (lon - minLon) * k, py = lat => (maxLat - lat) * 1000;
+  const trazo = anillos => anillos.map(r => "M" + r.map(p => px(p[0]).toFixed(1) + " " + py(p[1]).toFixed(1)).join("L") + "Z").join("");
+  svgMapa.setAttribute("viewBox", (-mg) + " " + (-mg) + " " + (W + 2*mg) + " " + (H + 2*mg));
+  $("#mapaLienzo").style.aspectRatio = (W + 2*mg) + " / " + (H + 2*mg);
+
+  const defs = nuevo("defs");
+  const pat = nuevo("pattern", {id:"pSinDato", patternUnits:"userSpaceOnUse", width:"26", height:"26", patternTransform:"rotate(45)"});
+  pat.appendChild(nuevo("rect", {width:"26", height:"26", fill:"#eeeeec"}));
+  pat.appendChild(nuevo("line", {x1:"0", y1:"0", x2:"0", y2:"26", stroke:"#9aa3a6", "stroke-width":"9"}));
+  defs.appendChild(pat); svgMapa.appendChild(defs);
+
+  const g = nuevo("g", {"class":"relleno"});
+  feats.forEach(f => {
+    const p = nuevo("path", {d:trazo(f.anillos), "fill-rule":"evenodd"});
+    p.dataset.cod = f.cod_mun;
+    p.addEventListener("pointermove", ev => { if(ev.pointerType === "mouse"){ mostrarTip(tipMapa(f.cod_mun), ev); resaltarPaso(f.cod_mun); } });
+    p.addEventListener("pointerleave", () => { ocultarTip(); resaltarPaso(null); });
+    p.addEventListener("click", () => seleccionarMun(f.cod_mun));
+    g.appendChild(p); PATHS[f.cod_mun] = p;
+  });
+  svgMapa.appendChild(g);
+
+  /* Límite departamental, si la geometría lo trae. */
+  const dAll = lista(GEO.departamentos).map(d => Array.isArray(d.anillos) ? trazo(d.anillos) : "").join("");
+  if(dAll) svgMapa.appendChild(nuevo("path", {"class":"limite", d:dAll}));
+
+  trazoPaso = nuevo("path", {"class":"sobre", id:"mapaPaso"}); svgMapa.appendChild(trazoPaso);
+  trazoSel  = nuevo("path", {"class":"sobre", id:"mapaSel"});  svgMapa.appendChild(trazoSel);
+
+  /* Capitales, como en los mapas del documento. */
+  const rot = $("#mapaRotulos");
+  lista(GEO.capitales).forEach(c => {
+    if(num(c.lon) === null || num(c.lat) === null) return;
+    const d = document.createElement("div");
+    d.className = "capital " + (c.rotulo === "oeste" ? "oeste" : "este");
+    d.style.left = ((px(c.lon) + mg) / (W + 2*mg) * 100) + "%";
+    d.style.top  = ((py(c.lat) + mg) / (H + 2*mg) * 100) + "%";
+    d.innerHTML = '<span class="punto"></span><span class="nombre">' + esc(c.nombre) + '</span>';
+    rot.appendChild(d);
+  });
+}
+function resaltarPaso(cod){ if(trazoPaso) trazoPaso.setAttribute("d", cod && PATHS[cod] ? PATHS[cod].getAttribute("d") : ""); }
+
+/* Tooltip común. No es la única vía para leer un valor: todo está en las tablas. */
+const tip = $("#tip");
+function mostrarTip(html, ev){
+  tip.innerHTML = html;
+  const w = tip.offsetWidth || 260, h = tip.offsetHeight || 80;
+  let x = ev.clientX + 14, y = ev.clientY + 14;
+  if(x + w > window.innerWidth - 8) x = Math.max(8, ev.clientX - w - 14);
+  if(y + h > window.innerHeight - 8) y = Math.max(8, ev.clientY - h - 14);
+  tip.style.left = x + "px"; tip.style.top = y + "px"; tip.style.opacity = 1;
+}
+function ocultarTip(){ tip.style.opacity = 0; }
+function filaTip(k, v){ return "<dt>" + esc(k) + "</dt><dd>" + esc(v) + "</dd>"; }
+function tipMapa(cod){
+  const mu = MUN[cod], r = EST.get(E.modelo + "|" + cod), md = MOD[E.modelo], s = SENS[cod];
+  let h = '<b class="t1">' + esc(mu.municipio) + '</b><span class="t2">' + esc(mu.departamento) + '</span><dl>';
+  if(r){
+    h += filaTip("Estimación", fmtPct(r.estimacion)) +
+         filaTip("IC 95 %", fmt(valor(cod,"ic_inf"),1) + " a " + fmt(valor(cod,"ic_sup"),1) + " %") +
+         filaTip("CV (MSE " + md._mse.corto + ")", fmtCv(r.cv_pct));
+  }
+  if(E.variable === "dif") h += filaTip("Diferencia con " + sigla(MOD[E.comparar]), fmtSigno(valor(cod,"dif"),1) + " pp");
+  if(s) h += filaTip("Rango entre modelos", fmt(s.rango*100,1) + " pp");
+  return h + "</dl>";
+}
+
+function leyendaHtml(es){
+  const v = E.variable, def = VARIABLES[v];
+  let tit = def.nombre + " (" + (def.unidad === "pp" ? "puntos porcentuales" : def.unidad) + ")";
+  if(v === "dif") tit = "Diferencia: " + sigla(MOD[E.modelo]) + " menos " + sigla(MOD[E.comparar]) + " (puntos porcentuales)";
+  if(!es) return '<div class="tit">' + esc(tit) + '</div><div class="sub">Sin datos para este modelo.</div>';
+  const k = es.colores.length, dec = decimalesDe(es.cortes);
+  /* En la escala secuencial el ancho de cada clase es proporcional a su intervalo. */
+  const lo = es.cortes[0], total = es.cortes[k] - lo;
+  const ancho = i => es.div ? 1 : (es.cortes[i+1] - es.cortes[i]);
+  let h = '<div class="tit">' + esc(tit) + '</div><div class="clases" aria-hidden="true">' +
+          es.colores.map((c, i) => '<i style="flex-grow:' + ancho(i) + ';background:' + css(c) + '"></i>').join("") + '</div><div class="cortes" aria-hidden="true">';
+  if(es.div){
+    es.cortes.forEach((c, i) => { h += '<span style="left:' + ((i+1)/k*100) + '%">' + esc(fmtSigno(c, dec)) + '</span>'; });
+  }else{
+    es.cortes.forEach((c, i) => {
+      const cl = i === 0 ? ' class="ini"' : (i === k ? ' class="fin"' : '');
+      h += '<span' + cl + ' style="left:' + ((c - lo)/total*100) + '%">' + esc(fmt(c, dec)) + '</span>';
+    });
+  }
+  h += '</div>';
+  /* La misma leyenda en texto, para lectores de pantalla. */
+  const txt = es.div
+    ? "Siete clases, de menor a mayor, con cortes en " + es.cortes.map(c => fmtSigno(c, dec)).join("; ") + " puntos porcentuales."
+    : k + " clases con cortes en " + es.cortes.map(c => fmt(c, dec)).join("; ") + ".";
+  h += '<span class="sr-only">' + esc(txt) + '</span>';
+  let extra = "";
+  if(es.div) extra += '<span>Morado: estima menos que el modelo de comparación. Naranja: estima más.</span>';
+  if(MUNICIPIOS.some(mu => valor(mu.cod_mun, v) === null)) extra += '<span><i class="rayado"></i>Sin dato</span>';
+  if(extra) h += '<div class="extra">' + extra + '</div>';
+  return h;
+}
+
+function dibujarMapa(){
+  const v = E.variable, es = escalaActual();
+  MUNICIPIOS.forEach(mu => {
+    const p = PATHS[mu.cod_mun]; if(!p) return;
+    const x = valor(mu.cod_mun, v), fuera = E.depto !== "Todos" && mu.departamento !== E.depto;
+    let fill;
+    if(x === null || !es) fill = fuera ? "#f4f4f2" : "url(#pSinDato)";
+    else { const c = es.colores[claseDe(es, x)]; fill = css(fuera ? palido(c) : c); }
+    p.setAttribute("fill", fill);
+  });
+  if(trazoSel) trazoSel.setAttribute("d", E.mun && PATHS[E.mun] ? PATHS[E.mun].getAttribute("d") : "");
+  $("#leyenda").innerHTML = leyendaHtml(es);
+
+  const md = MOD[E.modelo];
+  let nota;
+  if(v === "rango"){
+    nota = "El rango es la diferencia entre la estimación más alta y la más baja del municipio en los " + N_MOD +
+           " modelos. No depende del modelo elegido: señala los municipios más sensibles a la especificación.";
+  }else if(v === "dif"){
+    nota = E.modelo === E.comparar
+      ? "<b>El modelo elegido y el de comparación son el mismo:</b> todas las diferencias son cero. Cambie uno de los dos."
+      : "Diferencia entre la estimación del modelo elegido y la del modelo de comparación. La clase central reúne las diferencias de hasta " +
+        fmt(es.paso/2, decimalesDe([es.paso/2])) + (es.paso/2 === 1 ? " punto porcentual" : " puntos porcentuales") + " en valor absoluto. " +
+        (E.comun ? "Los cortes son los mismos al cambiar de modelo." : "Los cortes se ajustan al modelo elegido.");
+  }else{
+    nota = E.comun
+      ? "Escala fija: cada color corresponde al mismo intervalo de valores en todos los modelos, de modo que los mapas se pueden comparar al cambiar de modelo."
+      : "Escala propia del modelo elegido: los intervalos se ajustan a su recorrido y los colores no son comparables entre modelos.";
+  }
+  $("#notaEscala").innerHTML = nota;
+  $("#avisoDepto").hidden = E.depto === "Todos";
+  $("#campoComparar").hidden = v !== "dif";
+  $("#chkComun").disabled = v === "rango";
+  $("#chkComunEtq").style.opacity = v === "rango" ? .5 : 1;
+  svgMapa.setAttribute("aria-label", "Mapa de los " + N_MUN + " municipios. " + VARIABLES[v].nombre +
+    (v === "rango" ? "" : ", " + md.rotulo) + ". Los valores de cada municipio están en la tabla de municipios.");
+}
+
+/* ===================================================================== *
+ *  Paneles laterales                                                     *
+ * ===================================================================== */
+function fichaHtml(v, e){ return '<div class="ficha"><div class="v">' + v + '</div><div class="e">' + e + '</div></div>'; }
+function descripcionCorta(m){
+  const p = [NOMBRE_FAMILIA[m.familia] || m.grupo, "especificación " + m.especificacion];
+  if(m.familia === "FH") p.push(NOMBRE_ESCALA[m.escala] || m.escala);
+  return p.join(", ");
+}
+function dibujarResumen(){
+  const m = MOD[E.modelo];
+  let f = fichaHtml(esc(fmtCv(m.cv_medio)), "CV medio") +
+          fichaHtml(esc(fmtCv(m.cv_max)), "CV máximo") +
+          fichaHtml(esc(m._mse.corto), "Estimador del MSE (del que sale el CV)") +
+          fichaHtml(esc(fmtSig(m.sigma2_u, 3)), "σ²ᵤ (" + esc(NOMBRE_ESCALA[m.escala] || m.escala) + ")");
+  if(m.familia === "SFH") f += fichaHtml(esc(fmt(m.rho, 4)), "ρ (autocorrelación espacial)");
+  $("#resumenModelo").innerHTML =
+    '<h2>' + esc(m.rotulo) + marcaHtml(m) + etiquetaEstado(m) + '</h2>' +
+    '<div class="sub">' + esc(descripcionCorta(m)) + '. ' + esc(String(m.n_covariables)) + ' covariables.</div>' +
+    '<div class="fichas">' + f + '</div>' +
+    '<div class="nota">Covariables, coeficientes y comparación con los demás modelos en la pestaña <b>Modelo</b>.</div>';
+}
+function dibujarCartaMun(){
+  const cont = $("#cartaMun");
+  if(!E.mun){
+    cont.innerHTML = '<h2>Municipio</h2><div class="vacio">Elija un municipio en el mapa, en la tabla o en el selector.</div>';
+    return;
+  }
+  const mu = MUN[E.mun], r = EST.get(E.modelo + "|" + E.mun), s = SENS[E.mun], md = MOD[E.modelo];
+  let f = "";
+  if(r){
+    f += fichaHtml(esc(fmtPct(r.estimacion)), "Estimación") +
+         fichaHtml(esc(fmt(valor(E.mun,"ic_inf"),1) + " a " + fmt(valor(E.mun,"ic_sup"),1) + " %"), "Intervalo al 95 %") +
+         fichaHtml(esc(fmtCv(r.cv_pct)), "CV (MSE " + esc(md._mse.corto) + ")");
+  }
+  if(s) f += fichaHtml(esc(fmt(s.rango*100,1) + " pp"), "Rango entre los " + N_MOD + " modelos (de " + esc(fmt(s.min*100,1)) + " a " + esc(fmt(s.max*100,1)) + " %)");
+  cont.innerHTML =
+    '<h2>' + esc(mu.municipio) + ' <span class="sub">' + esc(mu.departamento) + '</span></h2>' +
+    '<div class="fichas">' + (f || '<div class="vacio">Sin estimación en este modelo.</div>') + '</div>' +
+    '<div class="nota"><button type="button" class="btn" id="btnVerMun">Ver este municipio en los ' + N_MOD + ' modelos</button></div>';
+  $("#btnVerMun").addEventListener("click", () => cambiarVista("municipio"));
+}
+
+/* ===================================================================== *
+ *  Tabla de municipios                                                   *
+ * ===================================================================== */
+function columnasTabla(){
+  const c = [
+    {k:"municipio",    t:"Municipio",       l:true, v:cod => MUN[cod].municipio},
+    {k:"departamento", t:"Departamento",    l:true, v:cod => MUN[cod].departamento},
+    {k:"estimacion",   t:"Estimación (%)",  v:cod => valor(cod,"estimacion")},
+    {k:"ic_inf",       t:"IC inferior (%)", v:cod => valor(cod,"ic_inf")},
+    {k:"ic_sup",       t:"IC superior (%)", v:cod => valor(cod,"ic_sup")},
+    {k:"cv_pct",       t:"CV (%)",          v:cod => valor(cod,"cv_pct")}
+  ];
+  if(E.variable === "amplitud") c.push({k:"amplitud", t:"Amplitud del IC (pp)", v:cod => valor(cod,"amplitud")});
+  if(E.variable === "dif") c.push({k:"dif", t:"Diferencia con " + sigla(MOD[E.comparar]) + marca(MOD[E.comparar]) + " (pp)", signo:true, v:cod => valor(cod,"dif")});
+  c.push({k:"rango", t:"Rango entre modelos (pp)", v:cod => valor(cod,"rango")});
+  return c;
+}
+function ordenar(filas, f, dir){
+  return filas.sort((a,b) => {
+    const x = f(a), y = f(b);
+    if(x === null || x === undefined) return 1;
+    if(y === null || y === undefined) return -1;
+    return (typeof x === "string" ? cmp(x, y) : x - y) * dir;
+  });
+}
+function encabezado(cols, orden){
+  return '<thead><tr>' + cols.map(c => {
+    const act = orden.col === c.k;
+    return '<th scope="col" class="' + (c.l ? 'l' : '') + '" aria-sort="' + (act ? (orden.dir > 0 ? "ascending" : "descending") : "none") + '">' +
+      '<button type="button" data-k="' + esc(c.k) + '">' + esc(c.t) + '<span class="flecha" aria-hidden="true">' + (act ? (orden.dir > 0 ? "▲" : "▼") : "") + '</span></button></th>';
+  }).join("") + '</tr></thead>';
+}
+function dibujarTabla(){
+  const cols = columnasTabla();
+  if(!cols.some(c => c.k === E.orden.col)) E.orden = {col:"estimacion", dir:-1};
+  const q = quitaTildes(E.busqueda.trim());
+  let cods = MUNICIPIOS.map(m => m.cod_mun);
+  if(E.depto !== "Todos") cods = cods.filter(c => MUN[c].departamento === E.depto);
+  if(q) cods = cods.filter(c => quitaTildes(MUN[c].municipio).indexOf(q) >= 0);
+  const col = cols.find(c => c.k === E.orden.col);
+  ordenar(cods, col.v, E.orden.dir);
+  const tr = cods.map(cod => '<tr data-cod="' + esc(cod) + '" class="' + (cod === E.mun ? "sel" : "") + '">' +
+    cols.map((c, i) => {
+      const x = c.v(cod);
+      if(i === 0) return '<th scope="row" class="l"><button type="button" class="enlace" data-cod="' + esc(cod) + '">' + esc(x) + '</button></th>';
+      if(c.l) return '<td class="l">' + esc(x) + '</td>';
+      return '<td>' + esc(c.signo ? fmtSigno(x, 1) : fmt(x, 1)) + '</td>';
+    }).join("") + '</tr>').join("");
+  $("#tabla").innerHTML = encabezado(cols, E.orden) + '<tbody>' +
+    (tr || '<tr><td colspan="' + cols.length + '" class="vacio">Ningún municipio coincide con la búsqueda.</td></tr>') + '</tbody>';
+  $("#cuenta").textContent = "(" + cods.length + " de " + N_MUN + ")";
+  const md = MOD[E.modelo];
+  $("#notaTabla").innerHTML = 'Modelo: <b>' + esc(md.rotulo + marca(md)) + '</b>. El CV y el intervalo salen del MSE de este modelo (' +
+    esc(md._mse.largo.charAt(0).toLowerCase() + md._mse.largo.slice(1)) + '). Intervalo: estimación ± ' + esc(fmt(num(META.z_ic) || 1.96, 2)) +
+    ' × √MSE, recortado a [0 %, 100 %]. El rango entre modelos no depende del modelo elegido. pp: puntos porcentuales.';
+}
+
+/* ===================================================================== *
+ *  Pestaña Modelo                                                        *
+ * ===================================================================== */
+function dd(k, v){ return '<dt>' + k + '</dt><dd>' + v + '</dd>'; }
+function criterioDe(esp){ const f = (ESPEC[esp] || [])[0]; return f && f.criterio ? String(f.criterio) : null; }
+function dibujarFichaModelo(){
+  const m = MOD[E.modelo], coef = COEF[m.modelo] || [], est = ESTADO[m.etapa3], crit = criterioDe(m.especificacion);
+  const escala = NOMBRE_ESCALA[m.escala] || m.escala, cf = CONTRA_FINAL[m.modelo];
+  let h = '<h2>' + esc(m.rotulo) + marcaHtml(m) + etiquetaEstado(m) + '</h2><dl class="ficha-modelo">';
+  h += dd("Familia", esc(NOMBRE_FAMILIA[m.familia] || m.grupo));
+  h += dd("Especificación", esc(m.especificacion + ": " + m.n_covariables + " covariables" + (crit ? ", seleccionadas con el criterio " + crit : "")));
+  h += dd("Escala de ajuste", esc(escala.charAt(0).toUpperCase() + escala.slice(1)));
+  h += dd("Método de estimación", esc((NOMBRE_METODO[m.metodo] || m.metodo) + (m.familia === "RFH" && num(m.k) !== null ? ", constante de Huber k = " + fmt(m.k, 3) : "")));
+  h += dd("Estimador del MSE", esc(m._mse.largo));
+  if(est) h += dd("Evaluación en la Etapa III", esc(est.txt));
+  h += dd("σ²ᵤ (varianza del efecto de área)", esc(fmtSig(m.sigma2_u, 4)) + ' <span class="sub">(en la ' + esc(escala) + ')</span>');
+  if(m.familia === "SFH") h += dd("ρ (autocorrelación espacial)", esc(fmt(m.rho, 4)) + (m.convergencia === false ? ' <span class="sub">(el ajuste no convergió)</span>' : ''));
+  h += dd("CV de los municipios", esc("media " + fmtCv(m.cv_medio) + ", mediana " + fmtCv(m.cv_mediana) + ", máximo " + fmtCv(m.cv_max)));
+  if(cf && !m.es_final) h += dd("Diferencia con la especificación final ★", esc("media absoluta de " + fmt(cf.media, 2) + " pp y máxima de " + fmt(cf.max, 1) + " pp entre los " + N_MUN + " municipios"));
+  if(num(m.n_ic_recortados) !== null && m.n_ic_recortados > 0) h += dd("Intervalos recortados", esc(m.n_ic_recortados + (m.n_ic_recortados === 1 ? " municipio tiene" : " municipios tienen") + " el intervalo recortado a [0 %, 100 %]"));
+  if(num(m.n_fuera_rango) !== null && m.n_fuera_rango > 0) h += dd("Estimaciones fuera de rango", esc(m.n_fuera_rango + " fuera de [0 %, 100 %]"));
+  h += '</dl>';
+
+  /* Covariables de las especificaciones, para ver cómo se anidan. */
+  const esps = Object.keys(ESPEC).sort(cmp);
+  if(esps.length){
+    const vars = [];
+    esps.slice().sort((a,b) => ESPEC[b].length - ESPEC[a].length).forEach(e => ESPEC[e].forEach(r => { if(vars.indexOf(r.variable) < 0) vars.push(r.variable); }));
+    h += '<h3>Covariables de las especificaciones</h3><div class="tabla-scroll libre"><table><thead><tr><th scope="col" class="l">Covariable</th>' +
+      esps.map(e => { const c = criterioDe(e); return '<th scope="col" class="c' + (e === m.especificacion ? ' act' : '') + '">' + esc(e + (c ? " (" + c + ")" : "")) + '</th>'; }).join("") + '</tr></thead><tbody>' +
+      vars.map(v => '<tr><th scope="row" class="l">' + esc(etiqueta(v)) + '</th>' + esps.map(e => {
+        const si = ESPEC[e].some(r => r.variable === v);
+        return '<td class="si' + (e === m.especificacion ? ' act' : '') + '">' + (si ? '<span aria-hidden="true">✓</span><span class="sr-only">incluida</span>' : '<span class="sr-only">no incluida</span>') + '</td>';
+      }).join("") + '</tr>').join("") +
+      '<tr><th scope="row" class="l">Número de covariables</th>' + esps.map(e => '<td class="c' + (e === m.especificacion ? ' act' : '') + '">' + ESPEC[e].length + '</td>').join("") + '</tr>' +
+      '</tbody></table></div>' +
+      '<div class="nota">Entre paréntesis, el criterio de información con que se seleccionó cada especificación. La columna resaltada es la del modelo elegido.</div>';
+  }
+
+  h += '<h3>Coeficientes</h3>';
+  if(coef.length){
+    h += '<div class="tabla-scroll libre"><table><thead><tr><th scope="col" class="l">Término</th><th scope="col">Coeficiente</th><th scope="col">Error estándar</th></tr></thead><tbody>' +
+      coef.map(c => '<tr><th scope="row" class="l">' + esc(etiqueta(c.termino)) + '</th><td>' + esc(fmtSig(c.coef, 4)) + '</td><td>' + esc(fmtSig(c.ee, 3)) + '</td></tr>').join("") +
+      '</tbody></table></div>';
+    h += '<div class="nota">Los coeficientes se leen como asociaciones, no como efectos causales.' +
+      (m.escala !== "original" ? ' Los coeficientes y σ²ᵤ están en la ' + esc(escala) + '.' : '') + '</div>';
+  }else{
+    h += '<div class="vacio">Este ajuste no trae tabla de coeficientes.</div>';
+  }
+  $("#fichaModelo").innerHTML = h;
+}
+function dibujarTablaModelos(){
+  const conFinal = !!FINAL;
+  const cab = [["Modelo","l"]];
+  if(HAY_ESTADO) cab.push(["Evaluación (Etapa III)","l"]);
+  cab.push(["Estimador del MSE","l"],["σ²ᵤ",""],["ρ",""],["CV medio (%)",""],["CV mediana (%)",""],["CV máx. (%)",""]);
+  if(conFinal) cab.push(["Dif. media con ★ (pp)",""],["Dif. máx. con ★ (pp)",""]);
+  const grupos = [];
+  const clave = m => E.ordenModelos === "mse" ? "MSE " + m._mse.corto : (NOMBRE_FAMILIA[m.familia] || m.grupo);
+  MODELOS.forEach(m => { const k = clave(m); let g = grupos.find(x => x.k === k); if(!g){ g = {k:k, items:[]}; grupos.push(g); } g.items.push(m); });
+  if(E.ordenModelos === "mse") grupos.forEach(g => g.items.sort((a,b) => (num(a.cv_medio) === null ? 1e9 : a.cv_medio) - (num(b.cv_medio) === null ? 1e9 : b.cv_medio)));
+  const filas = grupos.map(g => '<tr class="grupo"><th colspan="' + cab.length + '" scope="colgroup">' + esc(g.k) + '</th></tr>' +
+    g.items.map(m => {
+      const cf = CONTRA_FINAL[m.modelo];
+      return '<tr data-mod="' + esc(m.modelo) + '" class="' + claseFila(m) + (m.modelo === E.modelo ? "sel" : "") + '">' +
+        '<th scope="row" class="l"><button type="button" class="enlace" data-mod="' + esc(m.modelo) + '">' + esc(E.ordenModelos === "mse" ? m.rotulo : nombreFila(m)) + marcaHtml(m) + '</button></th>' +
+        (HAY_ESTADO ? '<td class="l">' + esc(ESTADO[m.etapa3] ? ESTADO[m.etapa3].tabla : "–") + '</td>' : '') +
+        '<td class="l">' + esc(m._mse.corto) + '</td>' +
+        '<td>' + esc(fmtSig(m.sigma2_u, 3)) + '</td><td>' + esc(m.familia === "SFH" ? fmt(m.rho, 4) : "–") + '</td>' +
+        '<td>' + esc(fmt(m.cv_medio, 1)) + '</td><td>' + esc(fmt(m.cv_mediana, 1)) + '</td><td>' + esc(fmt(m.cv_max, 1)) + '</td>' +
+        (conFinal ? '<td>' + esc(m.es_final ? "–" : (cf ? fmt(cf.media, 2) : "–")) + '</td><td>' + esc(m.es_final ? "–" : (cf ? fmt(cf.max, 1) : "–")) + '</td>' : '') + '</tr>';
+    }).join("")).join("");
+  $("#tablaModelos").innerHTML = '<thead><tr>' + cab.map(c => '<th scope="col" class="' + c[1] + '">' + esc(c[0]) + '</th>').join("") + '</tr></thead><tbody>' + filas + '</tbody>';
+  $$("#segOrden button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.orden === E.ordenModelos)));
+}
+function glosarioModelos(){
+  let h = "";
+  if(HAY_ESTADO) h += dd("Evaluación (Etapa III)", "Si el modelo se incluyó en la evaluación de concordancia y precisión de la Etapa III de la tesis. " +
+    (HAY_NO_EVAL ? "Los marcados con † no entraron a esa evaluación; los criterios están en la metodología del documento. Se muestran igual, en cursiva, para poder compararlos." : ""));
+  h += dd("Estimador del MSE", "Procedimiento con que se estimó el error cuadrático medio. De él dependen el CV y el intervalo de confianza. Los CV obtenidos con estimadores distintos no son directamente comparables: al agrupar por estimador del MSE, cada grupo queda ordenado por su CV medio.");
+  h += dd("σ²ᵤ", "Varianza estimada del efecto de área. Está en la escala de cada modelo, por lo que no es comparable entre las escalas original, logarítmica y logit.");
+  h += dd("ρ", "Parámetro de autocorrelación espacial; solo existe en los modelos espaciales.");
+  h += dd("CV medio, mediana y máximo", "Resumen del coeficiente de variación de las estimaciones en los " + N_MUN + " municipios.");
+  if(FINAL) h += dd("Dif. media y máx. con ★", "Media y máximo, entre los municipios, del valor absoluto de la diferencia entre la estimación del modelo y la de la especificación final, en puntos porcentuales (pp).");
+  $("#glosarioModelos").innerHTML = h;
+}
+
+/* ===================================================================== *
+ *  Pestaña Municipio: intervalos entre modelos y municipios sensibles    *
+ * ===================================================================== */
+function dibujarBosque(){
+  const cod = E.mun, mu = MUN[cod], s = SENS[cod];
+  $("#tituloMun").textContent = mu.municipio + " (" + mu.departamento + "): estimación en los " + N_MOD + " modelos";
+  const filas = MODELOS.map(md => ({md:md, r:EST.get(md.modelo + "|" + cod)})).filter(x => x.r && num(x.r.estimacion) !== null);
+  const rf = FINAL ? EST.get(FINAL.modelo + "|" + cod) : null;
+  let f = "";
+  if(s){
+    f += fichaHtml(esc(fmtPct(s.min)), "Estimación más baja (" + esc(sigla(MOD[s.modMin])) + ")") +
+         fichaHtml(esc(fmtPct(s.max)), "Estimación más alta (" + esc(sigla(MOD[s.modMax])) + ")") +
+         fichaHtml(esc(fmt(s.rango*100, 1) + " pp"), "Rango entre los " + N_MOD + " modelos");
+  }
+  if(rf) f += fichaHtml(esc(fmtPct(rf.estimacion)), "Especificación final ★ (" + esc(sigla(FINAL)) + ")");
+  $("#fichasMun").innerHTML = f;
+
+  let lo = Infinity, hi = -Infinity;
+  filas.forEach(x => {
+    const a = valor(cod, "ic_inf", x.md.modelo), b = valor(cod, "ic_sup", x.md.modelo), e = valor(cod, "estimacion", x.md.modelo);
+    lo = Math.min(lo, a === null ? e : a); hi = Math.max(hi, b === null ? e : b);
+  });
+  if(!filas.length){ $("#bosque").innerHTML = '<tbody><tr><td class="vacio">Sin estimaciones para este municipio.</td></tr></tbody>'; return; }
+  let tk = bonitos(lo, hi, 5);
+  const x0 = Math.max(0, tk[0]), x1 = Math.min(100, tk[tk.length - 1]);
+  tk = tk.filter(t => t >= x0 - 1e-9 && t <= x1 + 1e-9);
+  const X = v => Math.max(0, Math.min(100, (v - x0) / (x1 - x0) * 100));
+  const decT = decimalesDe(tk);
+  const ref = rf && num(rf.estimacion) !== null ? rf.estimacion * 100 : null;
+  const rejilla = tk.map(t => '<i class="rej" style="left:' + X(t) + '%"></i>').join("") + (ref !== null ? '<i class="refe" style="left:' + X(ref) + '%"></i>' : '');
+
+  let h = '<thead><tr><th scope="col" class="l">Modelo</th><th scope="col" class="g"><span class="sr-only">Estimación e intervalo, en porcentaje</span><div class="eje" aria-hidden="true">' +
+    tk.map(t => '<span style="left:' + X(t) + '%">' + esc(fmt(t, decT)) + ' %</span>').join("") + '</div></th>' +
+    '<th scope="col">Estimación (%)</th><th scope="col">IC 95 % (%)</th><th scope="col">CV (%)</th><th scope="col" class="l">Estimador del MSE</th></tr></thead><tbody>';
+  let grupo = null;
+  filas.forEach(x => {
+    const md = x.md, g = NOMBRE_FAMILIA[md.familia] || md.grupo;
+    if(g !== grupo){ grupo = g; h += '<tr class="grupo"><th colspan="6" scope="colgroup">' + esc(g) + '</th></tr>'; }
+    const e = valor(cod, "estimacion", md.modelo), a = valor(cod, "ic_inf", md.modelo), b = valor(cod, "ic_sup", md.modelo);
+    h += '<tr data-mod="' + esc(md.modelo) + '" class="' + claseFila(md) + (md.modelo === E.modelo ? "sel" : "") + '">' +
+      '<th scope="row" class="l"><button type="button" class="enlace" data-mod="' + esc(md.modelo) + '">' + esc(nombreFila(md)) + marcaHtml(md) + '</button></th>' +
+      '<td class="g"><div class="pista" aria-hidden="true">' + rejilla +
+        (a !== null && b !== null ? '<i class="ic" style="left:' + X(a) + '%;width:' + (X(b) - X(a)) + '%"></i>' : '') +
+        '<i class="pt ' + md._mse.forma + '" style="left:' + X(e) + '%"></i></div></td>' +
+      '<td>' + esc(fmt(e, 1)) + '</td><td>' + esc(a !== null && b !== null ? fmt(a, 1) + " a " + fmt(b, 1) : "–") + '</td>' +
+      '<td>' + esc(fmt(x.r.cv_pct, 1)) + '</td><td class="l">' + esc(md._mse.corto) + '</td></tr>';
+  });
+  $("#bosque").innerHTML = h + '</tbody>';
+
+  const formas = [];
+  MODELOS.forEach(m => { if(!formas.some(q => q.forma === m._mse.forma)) formas.push({forma:m._mse.forma, txt:m._mse.forma === "circ" ? "MSE analítico" : (m._mse.forma === "romb" ? "MSE por bootstrap" : "Otro estimador del MSE")}); });
+  $("#clavesBosque").innerHTML = formas.map(q => '<span><i class="pt ' + q.forma + '"></i>' + esc(q.txt) + '</span>').join("") +
+    '<span><i class="bar"></i>Intervalo al 95 %</span>' +
+    (ref !== null ? '<span><i class="lin"></i>Estimación de la especificación final ★</span>' : '');
+}
+function dibujarSensibles(){
+  $("#subSensibles").textContent = "Ordenados por el rango de la estimación entre los " + N_MOD + " modelos (la más alta menos la más baja). " +
+    "Un rango alto indica que la estimación del municipio depende más del modelo elegido. El nombre selecciona el municipio.";
+  const lst = E.todosSensibles ? SENS_ORDEN : SENS_ORDEN.slice(0, 10);
+  $("#sensibles").innerHTML = '<thead><tr><th scope="col">N.º</th><th scope="col" class="l">Municipio</th><th scope="col" class="l">Departamento</th>' +
+    '<th scope="col">Más baja (%)</th><th scope="col" class="l">Modelo</th><th scope="col">Más alta (%)</th><th scope="col" class="l">Modelo</th><th scope="col">Rango (pp)</th></tr></thead><tbody>' +
+    lst.map((mu, i) => { const s = SENS[mu.cod_mun];
+      return '<tr data-cod="' + esc(mu.cod_mun) + '" class="' + (mu.cod_mun === E.mun ? "sel" : "") + '"><td>' + (i + 1) + '</td>' +
+        '<th scope="row" class="l"><button type="button" class="enlace" data-cod="' + esc(mu.cod_mun) + '">' + esc(mu.municipio) + '</button></th>' +
+        '<td class="l">' + esc(mu.departamento) + '</td><td>' + esc(fmt(s.min*100, 1)) + '</td><td class="l">' + esc(sigla(MOD[s.modMin]) + marca(MOD[s.modMin])) + '</td>' +
+        '<td>' + esc(fmt(s.max*100, 1)) + '</td><td class="l">' + esc(sigla(MOD[s.modMax]) + marca(MOD[s.modMax])) + '</td><td>' + esc(fmt(s.rango*100, 1)) + '</td></tr>'; }).join("") + '</tbody>';
+  $("#btnSensibles").textContent = E.todosSensibles ? "Ver solo los 10 primeros" : "Ver los " + SENS_ORDEN.length + " municipios";
+  $("#btnSensibles").hidden = SENS_ORDEN.length <= 10;
+}
+
+/* ===================================================================== *
+ *  Pestaña Supuestos: QQ-plots de los nueve Fay-Herriot                  *
+ * ===================================================================== */
+function qnorm(p){
+  const a=[-3.969683028665376e+01,2.209460984245205e+02,-2.759285104469687e+02,1.383577518672690e+02,-3.066479806614716e+01,2.506628277459239e+00];
+  const b=[-5.447609879822406e+01,1.615858368580409e+02,-1.556989798598866e+02,6.680131188771972e+01,-1.328068155288572e+01];
+  const c=[-7.784894002430293e-03,-3.223964580411365e-01,-2.400758277161838e+00,-2.549732539343734e+00,4.374664141464968e+00,2.938163982698783e+00];
+  const d=[7.784695709041462e-03,3.224671290700398e-01,2.445134137142996e+00,3.754408661907416e+00];
+  const pl=0.02425, ph=1-pl; let q,r;
+  if(p<pl){ q=Math.sqrt(-2*Math.log(p)); return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1); }
+  if(p>ph){ q=Math.sqrt(-2*Math.log(1-p)); return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1); }
+  q=p-0.5; r=q*q;
+  return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
+}
+/* QQ-plot de una serie ya estandarizada, con la identidad como referencia      *
+ * (igual que los gráficos de emdi que van en el documento).                   */
+function qqSvg(titulo, filas, campo, id){
+  const datos = filas.map(r => ({y:r[campo], cod:r.cod_mun})).filter(d => num(d.y) !== null).sort((a,b) => a.y - b.y);
+  const n = datos.length;
+  if(n < 3) return '<div class="vacio">Sin datos.</div>';
+  const pts = datos.map((d, i) => ({x:qnorm((i + 0.5) / n), y:d.y, cod:d.cod}));
+  const lim = Math.ceil((Math.max(2.6, Math.abs(pts[0].y), Math.abs(pts[n-1].y), Math.abs(pts[0].x), Math.abs(pts[n-1].x)) + 0.25) * 2) / 2;
+  const W = 400, H = 400, ml = 46, mr = 12, mt = 10, mb = 42;
+  const X = v => ml + (v + lim) / (2 * lim) * (W - ml - mr), Y = v => H - mb - (v + lim) / (2 * lim) * (H - mt - mb);
+  let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc("Gráfico cuantil-cuantil de " + titulo.toLowerCase() + ". Los valores están en la tabla desplegable.") + '">';
+  for(let t = -Math.floor(lim); t <= Math.floor(lim); t++){
+    s += '<line x1="' + X(t) + '" x2="' + X(t) + '" y1="' + mt + '" y2="' + (H - mb) + '" stroke="#ece9e0"/>' +
+         '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + Y(t) + '" y2="' + Y(t) + '" stroke="#ece9e0"/>' +
+         '<text x="' + X(t) + '" y="' + (H - mb + 15) + '" font-size="11" text-anchor="middle" fill="#55636a">' + esc(fmt(t, 0)) + '</text>' +
+         '<text x="' + (ml - 6) + '" y="' + (Y(t) + 4) + '" font-size="11" text-anchor="end" fill="#55636a">' + esc(fmt(t, 0)) + '</text>';
+  }
+  s += '<line x1="' + X(-lim) + '" y1="' + Y(-lim) + '" x2="' + X(lim) + '" y2="' + Y(lim) + '" stroke="#a6540f" stroke-width="1.4"/>';
+  pts.forEach(p => { s += '<circle cx="' + X(p.x).toFixed(1) + '" cy="' + Y(p.y).toFixed(1) + '" r="3.6" fill="#0f5c6e" fill-opacity=".8" stroke="#fff" stroke-width=".8"/>'; });
+  pts.forEach(p => { s += '<circle class="qq-pt" data-qq="' + id + '" data-cod="' + esc(p.cod) + '" data-y="' + p.y + '" cx="' + X(p.x).toFixed(1) + '" cy="' + Y(p.y).toFixed(1) + '" r="9" fill="transparent"/>'; });
+  s += '<text x="' + (ml + (W - ml - mr) / 2) + '" y="' + (H - 8) + '" font-size="12" text-anchor="middle" fill="#55636a">Cuantiles teóricos de la normal</text>' +
+       '<text transform="translate(13 ' + (mt + (H - mt - mb) / 2) + ') rotate(-90)" font-size="12" text-anchor="middle" fill="#55636a">Cuantiles de la serie estandarizada</text>';
+  return s + '</svg>';
+}
+function dibujarNavFH(){
+  const fh = MODELOS.filter(m => m.familia === "FH");
+  const esps = []; fh.forEach(m => { if(esps.indexOf(m.especificacion) < 0) esps.push(m.especificacion); });
+  const escs = ["original","log","logit"].filter(e => fh.some(m => m.escala === e));
+  $("#navFH").innerHTML = '<table class="nav-fh"><thead><tr><td></td>' + escs.map(e => '<th scope="col">' + esc((NOMBRE_ESCALA[e] || e).replace(/^e/, "E")) + '</th>').join("") + '</tr></thead><tbody>' +
+    esps.map(sp => '<tr><th scope="row">' + esc(sp) + '</th>' + escs.map(e => {
+      const m = fh.find(q => q.especificacion === sp && q.escala === e);
+      if(!m) return '<td></td>';
+      return '<td><button type="button" class="' + (m.etapa3 === "no_evaluado" ? "no" : "") + '" data-mod="' + esc(m.modelo) + '" aria-pressed="' + (m.modelo === E.modelo) + '">' +
+        '<span class="sr-only">' + esc(sp + ", " + (NOMBRE_ESCALA[e] || e)) + '</span><span aria-hidden="true">' + esc(sp + " " + (ESCALA_CORTA[e] || e)) + '</span>' + marcaHtml(m) + '</button></td>';
+    }).join("") + '</tr>').join("") + '</tbody></table>';
+}
+function dibujarDiag(){
+  dibujarNavFH();
+  const m = MOD[E.modelo];
+  if(m.familia !== "FH"){
+    $("#diagCuerpo").innerHTML = '<div class="nota-caja" role="note">El modelo elegido, <b>' + esc(m.rotulo) + '</b>, es ' +
+      (m.familia === "SFH" ? "espacial" : "robusto") + ': para él no se presenta este diagnóstico (ver la nota al final). Elija arriba uno de los modelos Fay-Herriot.</div>';
+    return;
+  }
+  const filas = QQ[m.modelo];
+  let h = '<p class="titulo-modelo">' + esc(m.rotulo) + marcaHtml(m) + etiquetaEstado(m) + '</p>';
+  if(!filas || !filas.length){
+    h += '<div class="vacio">Este ajuste no tiene residuos ni efectos aleatorios exportados.</div>';
+  }else{
+    h += '<div class="dos"><figure class="qq"><figcaption>Residuos estandarizados</figcaption>' + qqSvg("Residuos estandarizados", filas, "res_z", "res") + '</figure>' +
+         '<figure class="qq"><figcaption>Efectos aleatorios predichos</figcaption>' + qqSvg("Efectos aleatorios predichos", filas, "ef_z", "ef") + '</figure></div>';
+    h += '<div class="nota">Cada punto es un municipio. Las dos series se muestran centradas y divididas por su desviación estándar, como en los gráficos del paquete emdi. La línea es la identidad: si la distribución fuera normal, los puntos se alinearían con ella.</div>';
+    const orden = filas.slice().sort((a,b) => cmp(MUN[a.cod_mun].municipio, MUN[b.cod_mun].municipio));
+    h += '<details><summary>Ver los valores de los gráficos en una tabla</summary><div class="tabla-scroll" style="margin-top:8px"><table><thead><tr><th scope="col" class="l">Municipio</th><th scope="col">Residuo estandarizado</th><th scope="col">Efecto aleatorio predicho</th></tr></thead><tbody>' +
+      orden.map(r => '<tr><th scope="row" class="l">' + esc(MUN[r.cod_mun].municipio) + '</th><td>' + esc(fmt(r.res_z, 2)) + '</td><td>' + esc(fmt(r.ef_z, 2)) + '</td></tr>').join("") + '</tbody></table></div></details>';
+    const f = NORMAL[m.modelo];
+    if(f){
+      h += '<h3>Estadísticos descriptivos</h3><div class="tabla-scroll libre"><table><thead><tr><th scope="col" class="l">Cantidad</th><th scope="col">Asimetría</th><th scope="col">Curtosis</th><th scope="col">Shapiro-Wilk (W)</th><th scope="col">Valor p</th></tr></thead><tbody>' +
+        '<tr><th scope="row" class="l">Residuos estandarizados</th><td>' + esc(fmt(f.res_asimetria, 3)) + '</td><td>' + esc(fmt(f.res_curtosis, 3)) + '</td><td>' + esc(fmt(f.res_shapiro_W, 4)) + '</td><td>' + esc(fmtP(f.res_shapiro_p)) + '</td></tr>' +
+        '<tr><th scope="row" class="l">Efectos aleatorios predichos</th><td>' + esc(fmt(f.ef_asimetria, 3)) + '</td><td>' + esc(fmt(f.ef_curtosis, 3)) + '</td><td>' + esc(fmt(f.ef_shapiro_W, 4)) + '</td><td>' + esc(fmtP(f.ef_shapiro_p)) + '</td></tr></tbody></table></div>' +
+        '<dl class="glosario">' +
+          dd("Residuos estandarizados", "Diferencia entre la referencia municipal DANE y la predicción del modelo, dividida por la raíz de la varianza de muestreo, en la escala en que se ajusta el modelo.") +
+          dd("Efectos aleatorios predichos", "Predicción del efecto de área de cada municipio.") +
+          dd("Asimetría", "Grado en que la distribución se carga hacia un lado. Vale 0 bajo normalidad.") +
+          dd("Curtosis", "Peso de las colas. Vale 3 bajo normalidad; valores mayores indican colas más pesadas.") +
+          dd("Shapiro-Wilk (W)", "Prueba de normalidad. W cercano a 1 indica una distribución cercana a la normal.") +
+          dd("Valor p", "De la prueba de Shapiro-Wilk, con H₀: la distribución es normal. Aquí es descriptivo, porque se calcula sobre cantidades predichas.") +
+        '</dl>';
+    }else{
+      h += '<div class="nota">Este ajuste no tiene estadísticos en la tabla de normalidad.</div>';
+    }
+  }
+  $("#diagCuerpo").innerHTML = h;
+}
+
+/* ===================================================================== *
+ *  Pestaña Concordancia                                                  *
+ * ===================================================================== */
+function traducirResultado(v){
+  if(v === null || v === undefined) return "–";
+  const s = String(v);
+  if(/not\s*reject|accept|no se rechaza/i.test(s)) return "No se rechaza H₀";
+  if(/reject|rechaza/i.test(s)) return "Se rechaza H₀";
+  return s;
+}
+const PRUEBAS_DEF = [
+  {clave:"bias_brown",
+   titulo:"Sesgo frente a la referencia (Brown et al., 2001)",
+   que:"Se ajusta la regresión Referencia = b₀ + b₁ × Estimación del modelo, con un punto por municipio. Si las estimaciones no se apartan de la referencia, la recta coincide con la identidad: b₀ = 0 y b₁ = 1. La prueba contrasta conjuntamente H₀: b₀ = 0 y b₁ = 1. Un valor p bajo indica que la recta se aparta de la identidad. No rechazar H₀ significa que no hay evidencia suficiente de ese apartamiento; no demuestra que no haya sesgo.",
+   cols:[
+     ["b0","b₀","Intercepto de la regresión. Vale 0 si la recta es la identidad.", v => fmtSig(v, 3)],
+     ["b1","b₁","Pendiente de la regresión. Vale 1 si la recta es la identidad.", v => fmtSig(v, 3)],
+     ["ee_b1","E. e. de b₁","Error estándar de la pendiente.", v => fmtSig(v, 3)],
+     ["R2","R²","Proporción de la variación de la referencia asociada a la estimación.", v => fmt(v, 3)],
+     ["p_conjunto","Valor p (F)","Prueba F de H₀: b₀ = 0 y b₁ = 1, con errores estándar convencionales.", fmtP],
+     ["p_conjunto_hc3","Valor p (HC3)","La misma prueba con errores estándar robustos a heterocedasticidad (HC3), como análisis de sensibilidad.", fmtP],
+     ["gq_p_psi","Valor p (GQ por ψ)","Prueba de Goldfeld-Quandt con los municipios ordenados por la varianza de muestreo ψ: indica si la dispersión de los residuos de la regresión cambia con ψ. Es un diagnóstico complementario y no se usa por sí solo para validar el modelo.", fmtP]
+   ]},
+  {clave:"gof_brown",
+   titulo:"Bondad de ajuste (Brown et al., 2001)",
+   que:"El estadístico W suma, sobre los municipios, el cuadrado de la diferencia entre la referencia y la estimación del modelo, dividido por la suma de la varianza de la referencia y el MSE del modelo. Se compara con la distribución χ². H₀: el valor esperado de la referencia coincide con las estimaciones del modelo. Un W por debajo del valor crítico no la rechaza.",
+   cols:[
+     ["W","W","Estadístico de bondad de ajuste.", v => fmt(v, 2)],
+     ["c2","Valor crítico χ²","Percentil 95 de la distribución χ² con los grados de libertad de la columna siguiente.", v => fmt(v, 2)],
+     ["gl","Grados de libertad","Número de municipios menos uno, que es la convención del paquete SAEval con que se calculó la prueba. Brown et al. (2001) usan el número de municipios.", v => fmt(v, 0)],
+     ["p_value","Valor p","Probabilidad de observar un W igual o mayor bajo H₀.", fmtP],
+     ["results","Resultado","Decisión de la prueba al 5 %.", traducirResultado]
+   ]},
+  {clave:"cobertura",
+   titulo:"Solapamiento de los intervalos (Brown et al., 2001)",
+   que:"Para cada municipio se compara el intervalo del modelo con el de la referencia, ambos construidos con el ajuste de Brown et al. (2001), y se cuentan los municipios en que no se solapan. H₀: la proporción de solapamiento es del 95 %, contrastada con una prueba binomial bilateral. La hipótesis se rechaza tanto si hay demasiados municipios sin solapamiento como si hay muy pocos, de modo que un solapamiento del 100 % también puede llevar al rechazo. Esta prueba no evalúa la cobertura de los intervalos del modelo.",
+   cols:[
+     ["non_coverage","Sin solapamiento","Número de municipios en que los dos intervalos no se solapan.", v => fmt(v, 0)],
+     ["domains","Municipios","Número de municipios comparados.", v => fmt(v, 0)],
+     ["non_overlap","Proporción sin solapamiento","Municipios sin solapamiento sobre el total.", v => fmt(v, 3)],
+     ["p_value","Valor p","De la prueba binomial bilateral.", fmtP],
+     ["results","Resultado","Decisión de la prueba al 5 %.", traducirResultado]
+   ]}
+];
+function dibujarPruebas(){
+  const html = PRUEBAS_DEF.map(def => {
+    const t = tabla(PRUEBAS[def.clave]);
+    if(!t.length) return "";
+    const cols = def.cols.filter(c => t.some(r => r[c[0]] !== undefined && r[c[0]] !== null));
+    const filas = t.filter(r => MOD[r.modelo]).sort((a,b) => MOD[a.modelo].orden - MOD[b.modelo].orden);
+    const cuerpo = filas.map(r => {
+      const m = MOD[r.modelo];
+      return '<tr data-mod="' + esc(m.modelo) + '" class="' + claseFila(m) + (m.modelo === E.modelo ? "sel" : "") + '">' +
+        '<th scope="row" class="l"><button type="button" class="enlace" data-mod="' + esc(m.modelo) + '">' + esc(m.rotulo) + marcaHtml(m) + '</button>' +
+        (m.etapa3 === "contraste" ? etiquetaEstado(m) : "") + '</th>' +
+        cols.map(c => '<td>' + esc(c[3](r[c[0]])) + '</td>').join("") + '</tr>';
+    }).join("");
+    return '<div class="prueba"><h3>' + esc(def.titulo) + '</h3><p>' + esc(def.que) + '</p>' +
+      '<div class="tabla-scroll libre"><table><thead><tr><th scope="col" class="l">Modelo</th>' +
+      cols.map(c => '<th scope="col">' + esc(c[1]) + '</th>').join("") + '</tr></thead><tbody>' + cuerpo + '</tbody></table></div>' +
+      '<dl class="glosario">' + cols.map(c => dd(esc(c[1]), esc(c[2]))).join("") + '</dl></div>';
+  }).join("");
+  $("#pruebasCuerpo").innerHTML = html || '<div class="vacio">El archivo de datos no trae tablas de pruebas. Ejecute antes 03_1_precision_diagnosticos.R.</div>';
+}
+
+/* ===================================================================== *
+ *  Control                                                               *
+ * ===================================================================== */
+function opcionesModelo(sel){
+  const grupos = [];
+  MODELOS.forEach(m => { const k = NOMBRE_FAMILIA[m.familia] || m.grupo; let g = grupos.find(x => x.k === k); if(!g){ g = {k:k, items:[]}; grupos.push(g); } g.items.push(m); });
+  sel.innerHTML = grupos.map(g => '<optgroup label="' + esc(g.k) + '">' +
+    g.items.map(m => '<option value="' + esc(m.modelo) + '">' + esc(m.rotulo + marca(m)) + '</option>').join("") + '</optgroup>').join("");
+}
+function anunciar(){
+  const m = MOD[E.modelo];
+  $("#anuncio").textContent = "Modelo: " + m.rotulo + (E.mun ? ". Municipio: " + MUN[E.mun].municipio : "") + ".";
+}
+function alCambiar(){ refrescar(); guardarEstado(); anunciar(); }
+function seleccionarModelo(id){ if(!MOD[id]) return; E.modelo = id; $("#selModelo").value = id; alCambiar(); }
+function seleccionarMun(cod){ E.mun = MUN[cod] ? cod : null; $("#selMun").value = E.mun || ""; alCambiar(); }
+function cambiarVista(v, foco){
+  if(VISTAS.indexOf(v) < 0) return;
+  E.vista = v;
+  /* La pestaña Municipio siempre muestra uno: si no hay, el más sensible a la especificación. */
+  if(v === "municipio" && !E.mun && SENS_ORDEN.length){ E.mun = SENS_ORDEN[0].cod_mun; $("#selMun").value = E.mun; }
+  $$("nav.tabs button").forEach(b => { const on = b.dataset.vista === v; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; if(on && foco) b.focus(); });
+  $$("section.vista").forEach(s => s.classList.toggle("activa", s.id === "v-" + v));
+  /* Si la página ya pasó del inicio del contenido, se vuelve a él; si no, no se mueve. */
+  const tope = $("main").getBoundingClientRect().top + window.scrollY - ($("nav.tabs").offsetHeight + (window.innerWidth >= 900 ? $(".global").offsetHeight : 0));
+  if(window.scrollY > tope) window.scrollTo(0, tope);
+  alCambiar();
+}
+function refrescar(){
+  if(E.vista === "mapa"){ dibujarMapa(); dibujarResumen(); dibujarCartaMun(); dibujarTabla(); }
+  else if(E.vista === "modelo"){ dibujarFichaModelo(); dibujarTablaModelos(); }
+  else if(E.vista === "municipio"){ dibujarBosque(); dibujarSensibles(); }
+  else if(E.vista === "diag"){ dibujarDiag(); }
+  else if(E.vista === "pruebas"){ dibujarPruebas(); }
+}
+/* Clic en un botón con data-mod o data-cod dentro de una tabla o un contenedor. */
+function delegar(sel, fn){
+  $(sel).addEventListener("click", ev => { const b = ev.target.closest("button[data-mod],button[data-cod],button[data-k]"); if(b) fn(b); });
+}
+
+function iniciar(){
+  $("#resumenTablero").textContent = "Cauca y Valle del Cauca, 2024. " + N_MUN + " municipios y " + N_MOD +
+    " modelos Fay-Herriot para comparar: estimaciones, precisión, parámetros y diagnósticos.";
+
+  /* Nota común de marcas y métodos. */
+  const hayRob = MODELOS.some(m => m.familia === "RFH");
+  let ley = "";
+  if(FINAL) ley += "<b>★</b> Especificación final seleccionada. ";
+  if(HAY_NO_EVAL) ley += "<b>†</b> No incluido en la evaluación de concordancia y precisión de la Etapa III. ";
+  ley += "Los modelos Fay-Herriot y Fay-Herriot espacial se estimaron por REML" +
+    (hayRob ? "; los robustos, con REBLUP y REBLUPbc y constante de Huber k = " + (K_ROB !== null ? esc(fmt(K_ROB, 3)) : "–") : "") + ".";
+  const aus = lista(META.modelos_ausentes);
+  if(aus.length) ley += " <b>Atención:</b> " + (aus.length === 1 ? "falta un modelo" : "faltan " + aus.length + " modelos") + " en el archivo de datos (" + esc(aus.join("; ")) + ").";
+  $("#leyendaModelos").innerHTML = ley;
+
+  opcionesModelo($("#selModelo")); opcionesModelo($("#selComparar"));
+  $("#selMun").innerHTML = '<option value="">(Sin selección)</option>' +
+    MUN_ORDEN.map(m => '<option value="' + esc(m.cod_mun) + '">' + esc(m.municipio) + ' (' + esc(m.departamento) + ')</option>').join("");
+  $("#selDepto").innerHTML = '<option>Todos</option>' + DEPTOS.map(d => '<option>' + esc(d) + '</option>').join("");
+  $("#btnSensibles").type = "button";
+
+  leerEstado();
+  $("#selModelo").value = E.modelo; $("#selComparar").value = E.comparar; $("#selMun").value = E.mun || "";
+  $("#selDepto").value = E.depto; $("#chkComun").checked = E.comun;
+  $$("#segVar button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.var === E.variable)));
+
+  construirMapa();
+  glosarioModelos();
+
+  $("#selModelo").addEventListener("change", e => seleccionarModelo(e.target.value));
+  $("#selMun").addEventListener("change", e => seleccionarMun(e.target.value));
+  $("#selComparar").addEventListener("change", e => { E.comparar = e.target.value; alCambiar(); });
+  $("#selDepto").addEventListener("change", e => { E.depto = e.target.value; alCambiar(); });
+  $("#chkComun").addEventListener("change", e => { E.comun = e.target.checked; alCambiar(); });
+  $("#buscar").addEventListener("input", e => { E.busqueda = e.target.value; dibujarTabla(); });
+  $$("#segVar button").forEach(b => b.addEventListener("click", () => {
+    E.variable = b.dataset.var;
+    $$("#segVar button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    if(E.variable === "dif" || E.variable === "rango" || E.variable === "amplitud") E.orden = {col:E.variable, dir:-1};
+    alCambiar();
+  }));
+  $$("#segOrden button").forEach(b => b.addEventListener("click", () => { E.ordenModelos = b.dataset.orden; dibujarTablaModelos(); }));
+  $("#btnSensibles").addEventListener("click", () => { E.todosSensibles = !E.todosSensibles; dibujarSensibles(); });
+
+  delegar("#tabla", b => {
+    if(b.dataset.k){
+      const k = b.dataset.k;
+      E.orden = {col:k, dir:E.orden.col === k ? -E.orden.dir : (k === "municipio" || k === "departamento" ? 1 : -1)};
+      dibujarTabla();
+      const nb = $('#tabla thead button[data-k="' + k + '"]'); if(nb) nb.focus();
+    }else if(b.dataset.cod) seleccionarMun(b.dataset.cod);
+  });
+  delegar("#tablaModelos", b => seleccionarModelo(b.dataset.mod));
+  delegar("#bosque", b => seleccionarModelo(b.dataset.mod));
+  delegar("#sensibles", b => { seleccionarMun(b.dataset.cod); $("#tituloMun").scrollIntoView({block:"nearest"}); });
+  delegar("#navFH", b => seleccionarModelo(b.dataset.mod));
+  delegar("#pruebasCuerpo", b => seleccionarModelo(b.dataset.mod));
+
+  /* Puntos de los QQ-plots: nombre del municipio al pasar el cursor. */
+  $("#diagCuerpo").addEventListener("pointermove", ev => {
+    const c = ev.target.closest ? ev.target.closest("circle.qq-pt") : null;
+    if(!c || ev.pointerType !== "mouse"){ ocultarTip(); return; }
+    const mu = MUN[c.dataset.cod];
+    mostrarTip('<b class="t1">' + esc(mu ? mu.municipio : "") + '</b><dl>' +
+      filaTip(c.dataset.qq === "res" ? "Residuo estandarizado" : "Efecto aleatorio predicho", fmt(Number(c.dataset.y), 2)) + '</dl>', ev);
+  });
+  $("#diagCuerpo").addEventListener("pointerleave", ocultarTip);
+
+  /* Pestañas: clic y flechas del teclado. */
+  const tabs = $$("nav.tabs button");
+  tabs.forEach((b, i) => {
+    b.addEventListener("click", () => cambiarVista(b.dataset.vista));
+    b.addEventListener("keydown", ev => {
+      let j = null;
+      if(ev.key === "ArrowRight") j = (i + 1) % tabs.length;
+      else if(ev.key === "ArrowLeft") j = (i - 1 + tabs.length) % tabs.length;
+      else if(ev.key === "Home") j = 0;
+      else if(ev.key === "End") j = tabs.length - 1;
+      if(j !== null){ ev.preventDefault(); cambiarVista(tabs[j].dataset.vista, true); }
+    });
+  });
+  window.addEventListener("scroll", ocultarTip, {passive:true});
+
+  /* Pie. */
+  const V = META.versiones || {}, z = num(META.z_ic) || 1.96;
+  const ver = [];
+  if(V.R) ver.push("R " + V.R); if(V.emdi) ver.push("emdi " + V.emdi); if(V.saeRobust) ver.push("saeRobust " + V.saeRobust);
+  let tec = ver.length ? "Modelos ajustados con " + ver.join(", ") + ". " : "";
+  if(num(META.semilla) !== null) tec += "Semilla " + fmt(META.semilla, 0) + ". ";
+  const bs = [];
+  if(num(META.b_mse_logit) !== null) bs.push(fmt(META.b_mse_logit, 0) + " en la escala logit");
+  if(num(META.b_boot_robusto) !== null) bs.push(fmt(META.b_boot_robusto, 0) + " en los robustos");
+  if(bs.length) tec += "Réplicas del bootstrap: " + bs.join(" y ") + ". ";
+  $("#pie").innerHTML =
+    '<p><b>Intervalo de confianza.</b> Estimación ± ' + esc(fmt(z, 2)) + ' × √MSE, recortado a [0 %, 100 %]; el MSE es el que devuelve cada ajuste. <b>CV.</b> √MSE / estimación × 100. <b>pp.</b> Puntos porcentuales.</p>' +
+    '<p>Ejercicio académico con estimaciones de áreas pequeñas. No son cifras oficiales y el tablero no incluye la referencia municipal DANE. Los coeficientes se leen como asociaciones, no como efectos causales.</p>' +
+    '<p>' + esc(tec) + (GEO.fuente ? 'Geometría: ' + esc(GEO.fuente) + '. ' : '') + 'Tablero construido el ' + esc(fechaLarga(META.construido || META.fecha)) + '.</p>';
+
+  cambiarVista(E.vista);
+}
+
+window.addEventListener("error", function(ev){
+  var a = document.getElementById("avisoError");
+  if(!a) return;
+  a.textContent = "Ocurrió un error al dibujar esta vista. Recargue la página; si se repite, vuelva a generar el tablero. Detalle: " + (ev && ev.message ? ev.message : "desconocido");
+  a.hidden = false;
+});
+
+try{ iniciar(); }
+catch(e){ mostrarError("El tablero no pudo iniciarse", "Vuelva a generarlo con 08_exportar_datos_dashboard.R y 09_dashboard_construir.R. Detalle: " + e.message); }
+
+})();
+</script>
+</body>
+</html>

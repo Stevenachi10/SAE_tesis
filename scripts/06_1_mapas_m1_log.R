@@ -3,7 +3,9 @@
 # ------------------------------------------------------------------------------
 # Etapa IV: estimaciones municipales finales de M1 log.
 #
-#   1. Coeficientes estimados de M1 (sin valores p).
+#   1. Coeficientes estimados de M1 (sin valores p), solo en consola. La
+#      tabla final_coeficientes_m1_log.csv, con error estándar y valor p, la
+#      escribe 06_0_estimaciones_coef_cv_m1_log.R.
 #   2. Estimación puntual y coeficiente de variación por municipio.
 #   3. Mapas lado a lado: pobreza estimada (a) y CV (b).
 #
@@ -13,7 +15,6 @@
 #   data/pivoteadas/MGN2025_MPIO_GRAFICO/MGN_ADM_MPIO_GRAFICO.shp
 #
 # SALIDAS (output/)
-#   final_coeficientes_m1_log.csv
 #   final_estimaciones_m1_log.csv
 #   fig_mapas_m1_log.png
 # ==============================================================================
@@ -119,13 +120,6 @@ print(tabla_coef, row.names = FALSE, digits = 6)
 
 cat("\nsigma_u^2 (escala logarítmica):",
     format(aj$model$variance, digits = 6), "\n")
-
-write.csv(
-  tabla_coef,
-  file.path(ruta_out, "final_coeficientes_m1_log.csv"),
-  row.names = FALSE,
-  fileEncoding = "UTF-8"
-)
 
 
 # ==============================================================================
@@ -396,7 +390,6 @@ ggsave(
 )
 
 cat("\nArchivos generados en", ruta_out, ":\n")
-cat("  final_coeficientes_m1_log.csv\n")
 cat("  final_estimaciones_m1_log.csv\n")
 cat("  fig_mapas_m1_log.png\n")
 cat("\nProceso terminado.\n")

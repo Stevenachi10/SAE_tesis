@@ -24,3 +24,12 @@ output/*
 !output/seleccion_stepwise_completo_both.rds
 !output/final_estimaciones_municipales_m1_log.csv
 !output/figuras/
+# Selección en escala logarítmica (sensibilidad del anexo; tarda horas).
+!output/seleccion_kicb2_log.rds
+# Estabilidad de la selección: resúmenes de las 57 corridas de la máquina
+# virtual. Las corridas individuales, la caché y los registros no se suben.
+!output/estabilidad_kicb2/
+output/estabilidad_kicb2/*
+!output/estabilidad_kicb2/estabilidad_*.csv
+# Tablero interactivo, listo para abrir en el navegador.
+!output/dashboard_pobreza.html
