@@ -30,25 +30,16 @@
 # AJUSTES EVALUADOS
 # ------------------------------------------------------------------------------
 # FH base, REML        M1, M2, M3 en escala original, log y logit       9
-# FH espacial, orden 1 M1, M2                                           2
 #
-# M3 y M3s espaciales no se evalúan: la primera presenta un parámetro de
-# autocorrelación prácticamente nulo y la segunda es un contraste auxiliar
-# sobre la covariable de distancia.
+# Los modelos espaciales no se evalúan, conforme a la metodología: sus efectos
+# aleatorios tienen una estructura de covarianza no diagonal, de modo que estos
+# diagnósticos no se trasladan directamente. El SFH se examina por la magnitud
+# de rho y su efecto sobre la precisión.
 #
 # FH BASE
 # -------
 # Se examinan random_effects y std_real_residuals, con QQ-plots, asimetría,
 # curtosis y Shapiro-Wilk leídos de forma conjunta.
-#
-# FH ESPACIAL
-# -----------
-# Se examinan las mismas cantidades, con especial atención a la estructura de
-# dependencia espacial. Los random_effects son efectos de área espacialmente
-# correlacionados; por tanto, un Shapiro-Wilk aplicado a esta serie NO
-# constituye un contraste estándar de normalidad de innovaciones
-# independientes. El valor-p se reporta como parte de la salida automática del
-# paquete, pero NO se utiliza como criterio formal de aceptación o rechazo.
 #
 # FH ROBUSTO
 # ----------
@@ -158,13 +149,13 @@ BASE_METODO <- "reml"
 BASE_ESCALA <- c("original", "log", "logit")
 
 # Familia espacial. Claves de esp$ajustes_esp.
-ESP_ESPEC <- c("M1", "M2")
+ESP_ESPEC <- character(0)   # no se evalúan (ver encabezado)
 
 # TRUE guarda las figuras de todos los ajustes; FALSE, solo las de
 # GRAFICAR_CLAVES.
 GRAFICAR        <- TRUE
 GRAFICAR_TODO   <- TRUE
-GRAFICAR_CLAVES <- c("M1_reml_original", "esp_M1")
+GRAFICAR_CLAVES <- c("M1_reml_original")
 
 PNG_ANCHO <- 2000
 PNG_ALTO  <- 1100
@@ -307,6 +298,64 @@ cruda <- function(aj, etiqueta) {
 # con Rscript evita esas pausas. La version instalada de ggplot2 puede emitir
 # avisos de fortify y descartar los colores previstos por el paquete: revisar
 # las figuras antes de darlas por buenas.
+
+# ------------------------------------------------------------------------------
+# Traducción de los rótulos en inglés de las figuras de emdi
+# ------------------------------------------------------------------------------
+# plot() de emdi rotula en inglés. Se reemplazan los textos conocidos en el
+# gtable de los QQ-plots y en los ggplot de las densidades, sin alterar los
+# datos ni la construcción de las figuras. Los rótulos que no estén en el
+# diccionario se informan en consola para revisarlos.
+TRADUCCION <- c(
+  "Theoretical quantiles"     = "Cuantiles te\u00f3ricos",
+  "Theoretical Quantiles"     = "Cuantiles te\u00f3ricos",
+  "Sample quantiles"          = "Cuantiles muestrales",
+  "Sample Quantiles"          = "Cuantiles muestrales",
+  "Error term"                = "T\u00e9rmino de error",
+  "Random effect"             = "Efecto aleatorio",
+  "Random effects"            = "Efectos aleatorios",
+  "Density"                   = "Densidad",
+  "density"                   = "Densidad",
+  "Std. residuals"            = "Residuos estandarizados",
+  "Standardized residuals"    = "Residuos estandarizados",
+  "Std. random effects"       = "Efectos aleatorios estandarizados",
+  "Standardized random effects" = "Efectos aleatorios estandarizados",
+  "Residuals"                 = "Residuos",
+  "Quantiles of std. residuals/sqrt(direct var.)" =
+    "Cuantiles de los residuos estandarizados",
+  "Quantiles of std. random effects" =
+    "Cuantiles de los efectos aleatorios estandarizados",
+  "Std. real. residuals"      = "Residuos realizados estandarizados"
+)
+rotulos_vistos <- character(0)
+
+traducir_texto <- function(x) {
+  if (!is.character(x)) return(x)
+  rotulos_vistos <<- unique(c(rotulos_vistos, x))
+  i <- match(trimws(x), names(TRADUCCION))
+  ifelse(is.na(i), x, TRADUCCION[i])
+}
+
+traducir_grob <- function(g) {
+  if (!is.null(g$label)) g$label <- traducir_texto(g$label)
+  if (!is.null(g$children) && length(g$children)) {
+    for (k in seq_along(g$children)) g$children[[k]] <- traducir_grob(g$children[[k]])
+  }
+  if (!is.null(g$grobs) && length(g$grobs)) {
+    g$grobs <- lapply(g$grobs, traducir_grob)
+  }
+  g
+}
+
+# En ggplot2 4.x los rótulos no se pueden reemplazar directamente en el
+# objeto; se leen y se vuelven a poner con labs().
+traducir_gg <- function(g) {
+  lbl <- tryCatch(ggplot2::get_labs(g), error = function(e) g$labels)
+  lbl <- lbl[vapply(lbl, is.character, logical(1))]
+  if (!length(lbl)) return(g)
+  g + do.call(ggplot2::labs, lapply(lbl, traducir_texto))
+}
+
 graficar <- function(aj, clave) {
   
   if (!GRAFICAR) return(invisible(FALSE))
@@ -339,7 +388,7 @@ graficar <- function(aj, clave) {
     ok <- tryCatch({
       grDevices::png(f, width = PNG_ANCHO, height = PNG_ALTO, res = PNG_RES)
       grid::grid.newpage()
-      grid::grid.draw(qq)
+      grid::grid.draw(traducir_grob(qq))
       grDevices::dev.off()
       file.exists(f)
     }, error = function(e) {
@@ -368,7 +417,7 @@ graficar <- function(aj, clave) {
     
     ok <- tryCatch({
       suppressWarnings(
-        ggplot2::ggsave(f, plot = g, width = PNG_ANCHO / PNG_RES,
+        ggplot2::ggsave(f, plot = traducir_gg(g), width = PNG_ANCHO / PNG_RES,
                         height = PNG_ALTO / PNG_RES, dpi = PNG_RES))
       file.exists(f)
     }, error = function(e) {
@@ -528,3 +577,12 @@ cat("Figuras en ", ruta_fig, ": ",
     length(list.files(ruta_fig, pattern = "\\.png$")), " archivo(s)\n",
     sep = "")
 cat("============================================================\n")
+
+# Rótulos encontrados en las figuras que no se tradujeron (revisar si alguno
+# sigue en inglés).
+sin_traducir <- setdiff(rotulos_vistos, c(names(TRADUCCION), TRADUCCION, ""))
+sin_traducir <- sin_traducir[!grepl("^[-0-9.,]+$", sin_traducir)]   # números de los ejes
+if (length(sin_traducir)) {
+  cat("\nR\u00f3tulos de las figuras sin traducir:\n")
+  print(sin_traducir)
+}

@@ -21,7 +21,22 @@ library(ggplot2)
 library(here)
 
 ruta_out <- here("output")
-cat("02_4g_figura_coeficientes.R: version v3, leyenda de signo forzada con show.legend\n")
+cat("02_4g_figura_coeficientes.R: version v4, nombres académicos de las covariables\n")
+
+
+# Nombres académicos de las covariables, como en la tabla de coeficientes.
+ETIQUETAS <- c(
+  alcantarillado_2018       = "Cobertura de alcantarillado (2018)",
+  pct_rural                 = "Población rural (%, 2024)",
+  partos_calificados_2020   = "Partos con atención calificada (2020)",
+  transferencias_pc         = "Transferencias corrientes per cápita (2024)",
+  saber11_lectura_2022      = "Saber 11, lectura crítica (2022)",
+  tasa_violencia_intra_2019 = "Tasa de violencia intrafamiliar (2019)",
+  pct_secundario_2023       = "Participación del sector secundario (2023)",
+  tiene_empresas_formales   = "Presencia de empresas formales",
+  dist_cali_km              = "Distancia a Cali (km)"
+)
+etiqueta <- function(x) ifelse(x %in% names(ETIQUETAS), ETIQUETAS[x], x)
 
 COL_PUNTO <- "#b5482e"; COL_LINEA <- "#2c6e6b"; COL_BANDA <- "#c9c2b3"
 
@@ -36,6 +51,8 @@ stopifnot(all(c("especificacion", "metodo", "covariable",
 
 # El intercepto se omite de la figura (se conserva en el resumen y en la tabla).
 cf_fig <- cf %>% filter(covariable != "(Intercept)")
+sin_nombre <- setdiff(unique(cf_fig$covariable), names(ETIQUETAS))
+if (length(sin_nombre)) warning("Covariables sin nombre académico: ", paste(sin_nombre, collapse = ", "))
 
 # reblup y reblupbc comparten el ajuste de los coeficientes. Si los coeficientes
 # son idénticos, se grafica una sola serie para no duplicar puntos.
@@ -48,10 +65,11 @@ idénticos <- length(metodos_cf) < 2 ||
 
 if (idénticos) {
   cf_fig <- cf_fig %>% filter(metodo == metodos_cf[1]) %>%
-    mutate(metodo = "Robusto (reblup y reblupbc)")
-  colores <- c("Robusto (reblup y reblupbc)" = COL_LINEA)
+    mutate(metodo = "Robusto (REBLUP y REBLUPbc)")
+  colores <- c("Robusto (REBLUP y REBLUPbc)" = COL_LINEA)
 } else {
   colores <- c(reblup = COL_LINEA, reblupbc = COL_PUNTO)
+  cf_fig$metodo <- factor(cf_fig$metodo, levels = c("reblup", "reblupbc"))
 }
 
 # Orden de las covariables dentro de cada especificación: mayor desplazamiento
@@ -89,7 +107,7 @@ g <- ggplot(cf_fig, aes(x = desplazamiento_ee_base, y = covariable_f)) +
                               override.aes = list(colour = "black", alpha = 1,
                                                   size = 2.8, stroke = 0.9)),
          colour = guide_legend(order = 1)) +
-  scale_y_discrete(labels = function(x) sub("^.*___", "", x)) +
+  scale_y_discrete(labels = function(x) etiqueta(sub("^.*___", "", x))) +
   coord_cartesian(xlim = c(-lim, lim)) +
   facet_grid(especificacion ~ ., scales = "free_y", space = "free_y") +
   labs(x = "Diferencia (robusto menos convencional)\nen errores estándar del ajuste convencional",
@@ -99,7 +117,7 @@ g <- ggplot(cf_fig, aes(x = desplazamiento_ee_base, y = covariable_f)) +
         axis.title.x = element_text(size = 11))
 
 ggsave(file.path(ruta_out, "fig_rob_coeficientes.png"), g,
-       width = 8, height = 7, dpi = 400)
+       width = 9, height = 7, dpi = 400)
 
 # ---- Resumen numérico --------------------------------------------------------
 resumen <- cf %>%
