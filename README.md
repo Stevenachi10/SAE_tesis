@@ -62,9 +62,9 @@ con los scripts. Se conservan las siguientes:
 | `01` y `01_1` | Construcción de la base integrada y verificación de la imputación |
 | `02_1c` a `02_4g` | Selección de covariables (con su estabilidad y la selección en escala logarítmica) y ajuste de los modelos Fay-Herriot estándar, espacial y robusto |
 | `03_0` a `04_1` | Supuestos, precisión, incertidumbre de la referencia, consistencia con las cifras departamentales, sensibilidad a la escala de selección y benchmarking |
-| `05` | Contribución de las variables auxiliares mediante valores de Shapley (KICb2, MSE y CV) |
+| `05_1` | Contribución de las variables auxiliares mediante valores de Shapley (KICb2, MSE y CV) |
 | `06_0` y `06_1` | Estimaciones finales, coeficientes y mapas |
-| `07_2.R` | Análisis exploratorio de las especificaciones |
+| `07_2` | Análisis exploratorio de las especificaciones |
 | `08` y `09` | Tablero interactivo (`output/dashboard_pobreza.html`) |
 
 ## Correspondencia con la tesis
@@ -84,5 +84,5 @@ Script que produce cada grupo de resultados y archivo de `output/` donde queda.
 | Consistencia con las cifras departamentales | `03_2_agregado_departamental.R` | `agr_comparacion.csv`, `agr_resumen_compatibilidad.csv` |
 | Benchmarking (sensibilidad) | `04_1_benchmarking_m1log.R` | `bench_*.csv` |
 | Estimaciones finales, coeficientes y mapas | `06_0_estimaciones_coef_cv_m1_log.R`, `06_1_mapas_m1_log.R` | `final_estimaciones_municipales_m1_log.csv`, `final_coeficientes_m1_log.csv`, `fig_mapas_m1_log.png` |
-| Valores de Shapley (Etapa IV) | `05_shapley_etapa4_completo.R` | `shapley_kicb2_m1*_ranking.csv`, `shapley_mse_m1_log_ranking.csv`, `shapley_cv_m1_log_ranking.csv`, `auditoria_shapley_*.csv` |
+| Valores de Shapley (Etapa IV) | `05_1_shapley_etapa4_completo.R` | `shapley_kicb2_m1*_ranking.csv`, `shapley_mse_m1_log_ranking.csv`, `shapley_cv_m1_log_ranking.csv`, `auditoria_shapley_*.csv` |
 | Tablero interactivo | `08_exportar_datos_dashboard.R`, `09_dashboard_construir.R` | `dashboard_pobreza.html` |

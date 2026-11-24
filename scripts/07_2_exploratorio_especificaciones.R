@@ -157,6 +157,17 @@ ggsave(file.path(ruta_fig, "fig_eda_m1_distribuciones.png"), g_dist,
        width = 10, height = 8, dpi = 200)
 
 # ---- A3. Relaciones bivariadas con la respuesta -----------------------------
+# Nombres cortos de los paneles. El título y la explicación de las líneas van
+# en el pie de la figura en la tesis, no dentro de la imagen.
+PANELES <- c(
+  alcantarillado_2018       = "Alcantarillado (%)",
+  pct_rural                 = "Población rural (%)",
+  partos_calificados_2020   = "Partos calificados (%)",
+  transferencias_pc         = "Transferencias per cápita",
+  saber11_lectura_2022      = "Saber 11, lectura crítica",
+  tasa_violencia_intra_2019 = "Violencia intrafamiliar"
+)
+etiqueta_panel <- function(x) ifelse(x %in% names(PANELES), PANELES[x], x)
 bivariada <- function(respuesta, etiqueta_y, archivo) {
   b <- datos %>%
     select(cod_mun, depto, y = all_of(respuesta), all_of(VARS_M1)) %>%
@@ -169,11 +180,10 @@ bivariada <- function(respuesta, etiqueta_y, archivo) {
                 colour = "grey25", linewidth = 0.6) +
     geom_smooth(method = "loess", formula = y ~ x, se = FALSE,
                 colour = "darkorange", linewidth = 0.6, linetype = "dashed") +
-    facet_wrap(~ variable, scales = "free_x", ncol = 3) +
+    facet_wrap(~ variable, scales = "free_x", ncol = 3,
+               labeller = as_labeller(etiqueta_panel)) +
     scale_colour_manual(values = COL_DEPTO, name = NULL) +
-    labs(x = NULL, y = etiqueta_y,
-         title = "Relaciones bivariadas con la respuesta",
-         subtitle = "Linea continua: ajuste lineal. Linea discontinua: loess.") +
+    labs(x = NULL, y = etiqueta_y) +
     theme_minimal(base_size = 11) +
     theme(legend.position = "bottom")
   
