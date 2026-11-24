@@ -16,6 +16,7 @@ entrega; para reproducir la tesis, descargue esa versión y no la rama.
 scripts/            Scripts del análisis, en orden de ejecución
 data/raw/           Referencia municipal DANE y cifras departamentales
 data/pivoteadas/    Covariables auxiliares ya procesadas y cartografía MGN 2025
+                    (inventario en data/pivoteadas/README.md)
 output/             Salidas (se regeneran al ejecutar los scripts)
 ```
 
@@ -46,7 +47,12 @@ con los scripts. Se conservan las siguientes:
   horas (el paso `02_1c` está desactivado por defecto en el pipeline).
 - `final_estimaciones_municipales_m1_log.csv`, con las estimaciones finales de
   pobreza por municipio, su CV e intervalo al 95 %.
-- `figuras/`, con los gráficos de diagnóstico del anexo de normalidad.
+- `figuras/`, con los gráficos de diagnóstico del anexo de normalidad
+  (`03_0_normalidad.R`) y las dos figuras bivariadas del análisis
+  exploratorio del anexo (`fig_eda_bivariadas_log.png` y
+  `fig_eda_depto_bivariadas_log.png`), que se conservan como imagen porque
+  provienen de una exploración inicial cuyo script no forma parte del
+  repositorio.
 - `seleccion_kicb2_log.rds`, la selección en escala logarítmica del anexo de
   sensibilidad (el paso `02_1d` está desactivado por defecto).
 - `estabilidad_kicb2/`, con los resúmenes de la estabilidad de la selección
